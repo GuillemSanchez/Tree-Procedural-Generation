@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEditor;
 using TreeEditor;
 using UnityEngine.UIElements;
+
 public class BasicTreeGenerator : EditorWindow {
 
     // window vars
     bool treeWindow = true;
     bool rootWindow = true;
-    bool trunkWindow = false;
 
     bool rootSelected = false;
-
     // Core Variables
     Tree tree;
     TreeData advancedData;
-   
+    
 
+    List<BasicMainTrunk> myMainGroups = new List<BasicMainTrunk>();
 
  
     // Root Vars
@@ -56,10 +56,14 @@ public class BasicTreeGenerator : EditorWindow {
         }
     }
 
-    void OnInspectorUpdate()
+    void Update()
     {   
-        if (rootSelected && rootWindow)
+
+        if (rootSelected && rootWindow){
             ChangeRoot();
+            UpdateTree();
+        }
+            
     }
 
     private void ChangeRoot() {
@@ -75,8 +79,6 @@ public class BasicTreeGenerator : EditorWindow {
         
         
         advancedData.UpdateSeed(seed);
-        Material[] materials;
-        advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
     } 
 
     private void ShowTreeBasic() {
@@ -102,10 +104,10 @@ public class BasicTreeGenerator : EditorWindow {
     private void AddMainTrunk() {
         advancedData = tree.data as TreeData;
 
-        advancedData.AddGroup(advancedData.root, typeof(TreeGroupBranch));
-        Material[] materials;
-        advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
-        AssignMaterials(tree.GetComponent<Renderer>(), materials);
+        TreeGroup holder = advancedData.AddGroup(advancedData.root, typeof(TreeGroupBranch));
+        myMainGroups.Add(new BasicMainTrunk());
+        myMainGroups[myMainGroups.Count-1].ShowWindow();
+        myMainGroups[myMainGroups.Count-1].GenerateData(advancedData, holder as TreeGroupBranch, this);
     }
 
 
@@ -117,6 +119,13 @@ public class BasicTreeGenerator : EditorWindow {
 
             renderer.sharedMaterials = materials;
         }
+    }
+
+
+    public void UpdateTree(){
+        Material[] materials;
+        advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
+        AssignMaterials(tree.GetComponent<Renderer>(), materials); 
     }
 }
 
