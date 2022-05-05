@@ -70,7 +70,7 @@ public class BasicTreeGenerator : EditorWindow {
         advancedData = tree.data as TreeData;
 
 
-        
+        // tambien ha de haver una funcion que lo haga a la inversa TODO
         advancedData.root.seed = seed;
         advancedData.root.rootSpread = areaSpreed;
         advancedData.root.groundOffset = groundOffset;
@@ -123,6 +123,7 @@ public class BasicTreeGenerator : EditorWindow {
 
 
     public void UpdateTree(){
+        
         Material[] materials;
         advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
         AssignMaterials(tree.GetComponent<Renderer>(), materials); 
