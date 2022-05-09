@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,8 @@ using UnityEditor.AnimatedValues;
 public class BasicMainTrunk : EditorWindow
 {
     BasicTreeGenerator myGenerator;
-
+    //Optimize vars
+    bool editingTree = false;
 
     // Core Trunk vars --------------------------------------------
     // 0->999999 Slider
@@ -17,35 +18,66 @@ public class BasicMainTrunk : EditorWindow
     // 1->20 Slider
     int frequency = 1;
 
+
     //Distribution things 
     // 0.001f <-> 0.999f Slider
     float internalRing = 0.001f;
     // 0.002f <-> 1.000f Slider
     float externalRing = 1.000f;
     //limit private
-    float lastI = 0.001f;
-    float lastE = 1.000f;
+
     AnimationCurve distributionCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.001f, 1, float.PositiveInfinity, float.PositiveInfinity), new Keyframe(1, 0));
 
-    //Grow things
+    //Grow paras
     float internalGrowth = 1.000f;
-    float lastIG = 1.000f;
     float externalGrowth = 1.000f;
-    float lastEG = 1.000f;
+    float growthtotal = 1.000f;
     AnimationCurve growthCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
 
-    // Angle
+    // Angle paras
     float angleGrowth = 0.000f;
-    float lastAG = 0.000f;
     float angleMax = 1.000f;
-    AnimationCurve growthAngleCurve = new AnimationCurve(new Keyframe(0, 0.500f));
+    AnimationCurve growthAngleCurve = new AnimationCurve(new Keyframe(0, 0.000f));
     // Core Trunk vars --------------------------------------------
 
 
+    // Shape Trunk vars -------------------------------------------
+    // Lenght paras
+    float minLenght = 10.0f;
+    float maxLenght = 15.0f;
+
+
+    // Radius paras
+    // 0.1f -> 5.0f
+    bool relativeLength = true;
+    float radiusValue = 0.5f;
+    float bottomRadius = 1.0f;
+    float topRadius = 0.0f;
+    float capSmoothing = 0.0f;
+
+    AnimationCurve radiusCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
+
+    // Crinkliness and seek
+    float crinklinessValue = 0.1f;
+    float crinklinessTop = 1.0f;
+    float crinklinessBottom = 1.0f;
+    float seekValue = 0.1f;
+    float seekTop = 0.0f;
+    float seekbottom = 0.0f;
+
+
+
+
+    AnimationCurve crinklinessCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
+    AnimationCurve seekCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
+    // Shape Trunk vars -------------------------------------------
+
+    // Initialaze the Animation curves
     private readonly Rect m_CurveRangesA = new Rect(0, 0, 1, 1); // Range 0..1
     private readonly Rect m_CurveRangesB = new Rect(0, -1, 1, 2); // Range -1..1
 
-
+    // For scroll purpose
+    Vector2 scrollPos;
 
     TreeData advancedData;
     TreeGroupBranch myBranch;
@@ -57,6 +89,7 @@ public class BasicMainTrunk : EditorWindow
         window.Show();
     }
 
+    // Using this function to initialize the data
     public void GenerateData(TreeData data, TreeGroupBranch branchData, BasicTreeGenerator gene)
     {
         advancedData = data;
@@ -67,9 +100,12 @@ public class BasicMainTrunk : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Core Main Trunk", EditorStyles.boldLabel);
+
+        bool can = GUI.changed;
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        GUILayout.Label("Core Main Trunk:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Trunk seed", seed, 1, 999999);
-        frequency = EditorGUILayout.IntSlider("Quantity of trunks", frequency, 1, 20);
+        frequency = EditorGUILayout.IntSlider("Quantity of trunks", frequency, 1, 100);
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Internal Ring distribution", internalRing, 0.001f, 0.999f);
@@ -77,81 +113,164 @@ public class BasicMainTrunk : EditorWindow
         EditorGUILayout.CurveField(distributionCurve, Color.green, m_CurveRangesA);
         // Growth UI
         GUILayout.Label("Growth:", EditorStyles.boldLabel);
+        growthtotal = EditorGUILayout.Slider("Growth general", growthtotal, 0.000f, 1.000f);
         internalGrowth = EditorGUILayout.Slider("Internal Growth", internalGrowth, 0.000f, 1.000f);
         externalGrowth = EditorGUILayout.Slider("External Growth", externalGrowth, 0.000f, 1.000f);
         EditorGUILayout.CurveField(growthCurve, Color.green, m_CurveRangesA);
         // Angle UI
+        GUILayout.Label("Growth Angle:", EditorStyles.boldLabel);
         angleMax = EditorGUILayout.Slider("How much afects the angle", angleMax, 0.000f, 1.000f);
         angleGrowth = EditorGUILayout.Slider("Angle of growth", angleGrowth, -1.000f, 1.000f);
         EditorGUILayout.CurveField(growthAngleCurve, Color.green, m_CurveRangesB);
+        // Shape UI
+        GUILayout.Label("Shape", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
+        // Lenght UI
+        GUILayout.Label("Lenght:", EditorStyles.boldLabel);
+        maxLenght = EditorGUILayout.Slider("Max lenght", maxLenght, 0.1f, 49.9f);
+        minLenght = EditorGUILayout.Slider("Min lenght", minLenght, 0.2f, 50.0f);
+        // Radius UI
+        GUILayout.Label("Radius:", EditorStyles.boldLabel);
+        relativeLength = EditorGUILayout.Toggle("Relative Radius to Length", relativeLength);
+        radiusValue = EditorGUILayout.Slider("Average Radius", radiusValue, 0.1f, 5.000f);
+        topRadius = EditorGUILayout.Slider("Top or the branch", topRadius, 0.100f, 1.000f);
+        bottomRadius = EditorGUILayout.Slider("Bottom of the branch", bottomRadius, 0.100f, 1.000f);
+        capSmoothing = EditorGUILayout.Slider("Does the top of the trunk look smoothed", capSmoothing, 0.000f, 1.000f);
+        EditorGUILayout.CurveField(radiusCurve, Color.green, m_CurveRangesA);
+        // Misc UI
+        GUILayout.Label("Misc:", EditorStyles.boldLabel);
+        crinklinessValue = EditorGUILayout.Slider("Crinkliness", crinklinessValue, 0.0f, 1.000f);
+        crinklinessTop = EditorGUILayout.Slider("Top of the branch", crinklinessTop, 0.0f, 1.000f);
+        crinklinessBottom = EditorGUILayout.Slider("Bottom of the branch", crinklinessBottom, 0.0f, 1.000f);
+        crinklinessCurve = EditorGUILayout.CurveField(crinklinessCurve, Color.green, m_CurveRangesA);
+        seekValue = EditorGUILayout.Slider("Seek Sun", seekValue, 0.0f, 1.000f);
+        seekTop = EditorGUILayout.Slider("Top of the branch", seekTop, -1.0f, 1.000f);
+        seekbottom = EditorGUILayout.Slider("bottom of the branch", seekbottom, -1.0f, 1.000f);
+        seekCurve = EditorGUILayout.CurveField(seekCurve, Color.green, m_CurveRangesB);
+        editingTree = false;
+        if (GUI.changed != can)
+        {
+            editingTree = true;
+        }
+        EditorGUILayout.EndScrollView();
     }
 
     void Update()
     {
-        myBranch.seed = seed;
-        myBranch.distributionFrequency = frequency;
-        myBranch.UpdateSeed();
-        myGenerator.UpdateTree();
-
-        EditDistribution();
-        EditGrowth();
-        EditAngleofGrowth();
-        advancedData.UpdateFrequency(myBranch.uniqueID);
-
+        //Mirar si la pestaña seleccionada es esta
+        if (editingTree)
+        {
+            // Updating Everypart of the main trunk 
+            UpdateFrequencyandSeed();
+            UpdateDistribution();
+            UpdateGrowth();
+            UpdateAngleofGrowth();
+            UpdateLenght();
+            UpdateRadius();
+            UpdateMisc();
+            advancedData.UpdateFrequency(myBranch.uniqueID);
+            myBranch.UpdateSeed();
+            myGenerator.UpdateTree();
+        }
+        else
+        {
+            UpdateFromOriginal();
+        }
     }
 
-    private void EditDistribution()
+    private void UpdateDistribution()
     {
-
-        // Si alguno de los valores cambia pasamos a este modo 
-
-        if (externalRing != lastE || internalRing != lastI)
+        // No puede el external ring ser más pequeño que el internal ring 
+        // No puede el internal ring ser más grande que el external ring 
+        if (externalRing <= internalRing)
         {
-            // No puede el external ring ser más pequeño que el internal ring 
-            // No puede el internal ring ser más grande que el external ring 
-            if (externalRing <= internalRing)
-            {
-                internalRing = externalRing - 0.001f;
-            }
-            if (internalRing >= externalRing)
-            {
-                externalRing = internalRing + 0.001f;
-            }
-
-            distributionCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(internalRing, 1, float.PositiveInfinity, float.PositiveInfinity), new Keyframe(externalRing, 0));
-
+            internalRing = externalRing - 0.001f;
         }
-        lastE = externalRing;
-        lastI = internalRing;
+        if (internalRing >= externalRing)
+        {
+            externalRing = internalRing + 0.001f;
+        }
 
-        // Tambien ha de haber una funcion que lo haga a la inversa. TODO
+        distributionCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(internalRing, 1, float.PositiveInfinity, float.PositiveInfinity), new Keyframe(externalRing, 0));
         myBranch.distributionCurve = distributionCurve;
 
     }
-    private void EditGrowth()
+
+    private void UpdateGrowth()
     {
-        // Si alguno de los valores cambia pasamos a este modo
-        if (externalGrowth != lastEG || internalGrowth != lastIG)
-        {
-            growthCurve = new AnimationCurve(new Keyframe(0, internalGrowth), new Keyframe(1, externalGrowth));
-        }
-        lastIG = internalGrowth;
-        lastEG = externalGrowth;
-        // Tambien ha de haber una funcion que lo haga a la inversa. TODO
+        // This to points are the inner and the external circles of the growth
+        growthCurve = new AnimationCurve(new Keyframe(0, internalGrowth), new Keyframe(1, externalGrowth));
         myBranch.distributionScaleCurve = growthCurve;
+        myBranch.distributionScale = growthtotal;
+    }
+
+    private void UpdateAngleofGrowth()
+    {
+        growthAngleCurve = new AnimationCurve(new Keyframe(0.500f, angleGrowth));
+
+        myBranch.distributionPitch = angleMax;
+        myBranch.distributionPitchCurve = growthAngleCurve;
 
     }
-    private void EditAngleofGrowth()
-    {   
-        // Si alguno de los valores cambia pasamos a este modo
-        if (angleGrowth != lastAG)
+
+    private void UpdateFrequencyandSeed()
+    {
+        myBranch.seed = seed;
+        myBranch.distributionFrequency = frequency;
+    }
+
+    private void UpdateLenght()
+    {
+
+        if (maxLenght <= minLenght)
         {
-            growthAngleCurve = new AnimationCurve(new Keyframe(0.500f, angleGrowth));
+            maxLenght = minLenght + 0.1f;
         }
-        lastAG = angleGrowth;
-        // Tambien ha de haber una funcion que lo haga a la inversa. TODO
-        myBranch.distributionPitchCurve = growthAngleCurve;
-        myBranch.distributionPitch = angleMax;
+
+        myBranch.height = new Vector2(minLenght, maxLenght);
+    }
+
+    private void UpdateRadius()
+    {
+        myBranch.radius = radiusValue;
+        myBranch.capSmoothing = capSmoothing;
+        myBranch.radiusMode = relativeLength;
+        radiusCurve = new AnimationCurve(new Keyframe(0, bottomRadius), new Keyframe(1, topRadius));
+        myBranch.radiusCurve = radiusCurve;
+    }
+
+    private void UpdateMisc()
+    {
+        // Crinklyness
+        myBranch.crinklyness = crinklinessValue;
+        crinklinessCurve = new AnimationCurve(new Keyframe(0, crinklinessBottom), new Keyframe(1, crinklinessTop));
+        myBranch.crinkCurve = crinklinessCurve;
+
+        // Seek
+        myBranch.seekBlend = seekValue;
+        seekCurve = new AnimationCurve(new Keyframe(0, seekbottom), new Keyframe(1, seekTop));
+        myBranch.seekCurve = seekCurve;
+    }
+
+
+    private void UpdateFromOriginal()
+    {
+        distributionCurve = myBranch.distributionCurve;
+        growthCurve = myBranch.distributionScaleCurve;
+        growthtotal = myBranch.distributionScale;
+        angleMax = myBranch.distributionPitch;
+        growthAngleCurve =  myBranch.distributionPitchCurve;
+        seed =  myBranch.seed;
+        frequency =  myBranch.distributionFrequency;
+        minLenght =  myBranch.height.x;
+        maxLenght =  myBranch.height.y;
+        radiusValue =  myBranch.radius;
+        capSmoothing =  myBranch.capSmoothing;
+        relativeLength =  myBranch.radiusMode;
+        radiusCurve =  myBranch.radiusCurve;
+        crinklinessValue =  myBranch.crinklyness;
+        crinklinessCurve =  myBranch.crinkCurve;
+        seekValue =  myBranch.seekBlend;
+        seekCurve =  myBranch.seekCurve;
     }
 
 }

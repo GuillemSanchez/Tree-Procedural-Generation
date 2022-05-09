@@ -5,8 +5,9 @@ using UnityEditor;
 using TreeEditor;
 using UnityEngine.UIElements;
 
-public class BasicTreeGenerator : EditorWindow {
-
+public class BasicTreeGenerator : EditorWindow
+{
+    bool editingTree = false;
     // window vars
     bool treeWindow = true;
     bool rootWindow = true;
@@ -15,33 +16,39 @@ public class BasicTreeGenerator : EditorWindow {
     // Core Variables
     Tree tree;
     TreeData advancedData;
-    
 
+
+
+    bool changed = false;
     List<BasicMainTrunk> myMainGroups = new List<BasicMainTrunk>();
 
- 
+
     // Root Vars
     int seed = 0;
     float areaSpreed = 1.0f;
     float groundOffset = 0.0f;
     float LODoverall = 0.8f;
 
-    
+
     [MenuItem("Tree Procedural Generation/BasicTreeGenerator")]
-    private static void ShowWindow() {
+    private static void ShowWindow()
+    {
         var window = GetWindow<BasicTreeGenerator>();
         window.titleContent = new GUIContent("Tree Base");
         window.Show();
 
     }
 
-    private void OnGUI() {
+    private void OnGUI()
+    {
+        var editing = GUI.changed;
         treeWindow = EditorGUILayout.Foldout(treeWindow, "Select a Base");
         if (treeWindow)
         {
             ShowTreeBasic();
         }
-        if (rootSelected){
+        if (rootSelected)
+        {
             rootWindow = EditorGUILayout.Foldout(rootWindow, "Root Basics");
 
             if (rootWindow)
@@ -50,68 +57,97 @@ public class BasicTreeGenerator : EditorWindow {
             }
 
             // Button to adding the trunk?
-            if (GUILayout.Button("AddTrunk")){
+            if (GUILayout.Button("AddTrunk"))
+            {
                 AddMainTrunk();
             }
+        }
+        editingTree = true;
+        if (editing == GUI.changed)
+        {
+            editingTree = false;
+            UpdateFromOriginal();
         }
     }
 
     void Update()
-    {   
-
-        if (rootSelected && rootWindow){
-            ChangeRoot();
-            UpdateTree();
+    {
+        if (editingTree)
+        {
+            if (rootSelected && rootWindow && this.hasFocus)
+            {
+                ChangeRoot();
+                if (changed)
+                    UpdateTree();
+            }
+            changed = false;
         }
-            
+
     }
 
-    private void ChangeRoot() {
+    private void ChangeRoot()
+    {
         advancedData = tree.data as TreeData;
 
 
         // tambien ha de haver una funcion que lo haga a la inversa TODO
-        advancedData.root.seed = seed;
-        advancedData.root.rootSpread = areaSpreed;
-        advancedData.root.groundOffset = groundOffset;
-        advancedData.root.adaptiveLODQuality = LODoverall;
-        
-        
-        
-        advancedData.UpdateSeed(seed);
-    } 
+        if (seed != advancedData.root.seed || areaSpreed != advancedData.root.rootSpread || advancedData.root.groundOffset != groundOffset || advancedData.root.adaptiveLODQuality != LODoverall)
+        {
+            advancedData.root.seed = seed;
+            advancedData.root.rootSpread = areaSpreed;
+            advancedData.root.groundOffset = groundOffset;
+            advancedData.root.adaptiveLODQuality = LODoverall;
 
-    private void ShowTreeBasic() {
 
+            changed = true;
+            advancedData.UpdateSeed(seed);
+        }
+
+    }
+
+    private void ShowTreeBasic()
+    {
+        var holder = GUI.changed;
         // In this function we want the developer to put first the tree base
         tree = EditorGUILayout.ObjectField("tree object", tree, typeof(Tree), true) as Tree;
-        if (tree != null) {
+        if (tree != null)
+        {
             rootSelected = true;
+
         }
-        else {
+        else
+        {
             rootSelected = false;
+        }
+
+        if (holder != GUI.changed)
+        {
+            CreateOurTree();
         }
     }
 
-    private void ShowRootBasics() {
+    private void ShowRootBasics()
+    {
         // Basics of the Root of a Tree
-        seed = EditorGUILayout.IntSlider("Seed",seed,1,999999);
-        areaSpreed = EditorGUILayout.Slider("Area Spread",areaSpreed,0,10);
-        groundOffset = EditorGUILayout.Slider("Ground OffSet",groundOffset,0,10);
+        seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
+        areaSpreed = EditorGUILayout.Slider("Area Spread", areaSpreed, 0, 10);
+        groundOffset = EditorGUILayout.Slider("Ground OffSet", groundOffset, 0, 10);
         LODoverall = EditorGUILayout.Slider("LOD quality Overall", LODoverall, 0, 1);
     }
 
-    private void AddMainTrunk() {
+    private void AddMainTrunk()
+    {
         advancedData = tree.data as TreeData;
 
         TreeGroup holder = advancedData.AddGroup(advancedData.root, typeof(TreeGroupBranch));
         myMainGroups.Add(new BasicMainTrunk());
-        myMainGroups[myMainGroups.Count-1].ShowWindow();
-        myMainGroups[myMainGroups.Count-1].GenerateData(advancedData, holder as TreeGroupBranch, this);
+        myMainGroups[myMainGroups.Count - 1].ShowWindow();
+        myMainGroups[myMainGroups.Count - 1].GenerateData(advancedData, holder as TreeGroupBranch, this);
     }
 
 
-    private void AssignMaterials(Renderer renderer, Material[] materials){
+    private void AssignMaterials(Renderer renderer, Material[] materials)
+    {
         if (renderer != null)
         {
             if (materials == null)
@@ -122,11 +158,41 @@ public class BasicTreeGenerator : EditorWindow {
     }
 
 
-    public void UpdateTree(){
-        
+    public void UpdateTree()
+    {
         Material[] materials;
         advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
-        AssignMaterials(tree.GetComponent<Renderer>(), materials); 
+        AssignMaterials(tree.GetComponent<Renderer>(), materials);
+    }
+
+
+    public void CreateOurTree()
+    {
+        advancedData = tree.data as TreeData;
+        seed = advancedData.root.seed;
+        areaSpreed = advancedData.root.rootSpread;
+        groundOffset = advancedData.root.groundOffset;
+        LODoverall = advancedData.root.adaptiveLODQuality;
+
+        // Creating Trunks
+        for (int i = 0; i < advancedData.branchGroups.Length; i++)
+        {
+            if (advancedData.branchGroups[i].parentGroupID == advancedData.root.uniqueID)
+            {
+                myMainGroups.Add(new BasicMainTrunk());
+                myMainGroups[myMainGroups.Count - 1].ShowWindow();
+                myMainGroups[myMainGroups.Count - 1].GenerateData(advancedData, advancedData.branchGroups[i] as TreeGroupBranch, this);
+            }
+        }
+    }
+
+    private void UpdateFromOriginal()
+    {
+        advancedData = tree.data as TreeData;
+        seed = advancedData.root.seed;
+        areaSpreed = advancedData.root.rootSpread;
+        groundOffset = advancedData.root.groundOffset;
+        LODoverall = advancedData.root.adaptiveLODQuality;
     }
 }
 
