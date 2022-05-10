@@ -18,7 +18,7 @@ public class BasicBranches : EditorWindow
     public TreeGroupBranch myBranch;
 
 
-      //Optimize vars
+    //Optimize vars
     bool editingTree = false;
 
     // Core Trunk vars --------------------------------------------
@@ -174,6 +174,11 @@ public class BasicBranches : EditorWindow
         if (GUILayout.Button("Add Branches"))
         {
             CreateBranches();
+        }
+
+        if (GUILayout.Button("Delete this Group"))
+        {
+            DeleteGroup();
         }
 
         editingTree = false;
@@ -347,5 +352,11 @@ public class BasicBranches : EditorWindow
         externalGrowth_ = externalGrowth;
         internalGrowth_ = internalGrowth;
         crinklinessBottom_ = crinklinessBottom;
+    }
+
+    private void DeleteGroup()
+    {
+        myGenerator.DeleteGroup(myBranch);
+        this.Close();
     }
 }

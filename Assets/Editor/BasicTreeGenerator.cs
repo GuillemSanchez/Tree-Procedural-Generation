@@ -212,5 +212,11 @@ public class BasicTreeGenerator : EditorWindow
         myBranchesGroups[myBranchesGroups.Count - 1].GenerateData(advancedData, myBranch as TreeGroupBranch, this);
         myBranchesGroups[myBranchesGroups.Count - 1].CreateChilds();
     }
+
+    public void DeleteGroup(TreeGroup toDelete)
+    {
+        advancedData.DeleteGroup(toDelete);
+        UpdateTree();
+    }
 }
 

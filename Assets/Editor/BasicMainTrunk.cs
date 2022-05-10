@@ -168,6 +168,11 @@ public class BasicMainTrunk : EditorWindow
             CreateBranches();
         }
 
+        if (GUILayout.Button("Delete this Group"))
+        {
+            DeleteGroup();
+        }
+
         editingTree = false;
         if (GUI.changed != can)
         {
@@ -341,5 +346,11 @@ public class BasicMainTrunk : EditorWindow
         externalGrowth_ = externalGrowth;
         internalGrowth_ = internalGrowth;
         crinklinessBottom_ = crinklinessBottom;
+    }
+
+    private void DeleteGroup()
+    {
+        myGenerator.DeleteGroup(myBranch);
+        this.Close();
     }
 }
