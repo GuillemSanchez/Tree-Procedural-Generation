@@ -89,6 +89,8 @@ public class BasicMainTrunk : EditorWindow
     float FWheight = 0.1f;
     float FWnoise = 0.3f;
 
+    Material branchMaterial;
+
 
 
     AnimationCurve crinklinessCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
@@ -127,6 +129,7 @@ public class BasicMainTrunk : EditorWindow
         GUILayout.Label("Core Main Trunk:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Trunk seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of trunks", frequency, 1, 100);
+        branchMaterial = EditorGUILayout.ObjectField("Branch Material", branchMaterial, typeof(Material), false) as Material;
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Internal Ring distribution", internalRing, 0.001f, 0.999f);
@@ -256,6 +259,7 @@ public class BasicMainTrunk : EditorWindow
     {
         myBranch.seed = seed;
         myBranch.distributionFrequency = frequency;
+        myBranch.materialBranch = branchMaterial;
     }
 
     private void UpdateLenght()
@@ -327,6 +331,7 @@ public class BasicMainTrunk : EditorWindow
         FWradius = myBranch.flareSize;
         FWnoise = myBranch.flareNoise;
         FWheight = myBranch.flareHeight;
+        branchMaterial = myBranch.materialBranch;
     }
 
     public void CreateChilds()
@@ -362,6 +367,7 @@ public class BasicMainTrunk : EditorWindow
         externalGrowth_ = externalGrowth;
         internalGrowth_ = internalGrowth;
         crinklinessBottom_ = crinklinessBottom;
+
     }
 
     private void DeleteGroup()

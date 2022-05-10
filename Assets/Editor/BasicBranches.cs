@@ -92,7 +92,7 @@ public class BasicBranches : EditorWindow
     float Wtop = 0.1f;
     float Wbot = 0.3f;
 
-
+    Material branchMaterial;
 
 
     AnimationCurve crinklinessCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
@@ -134,6 +134,7 @@ public class BasicBranches : EditorWindow
         GUILayout.Label("Core Branches:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Branches", frequency, 1, 100);
+        branchMaterial = EditorGUILayout.ObjectField("Branch Material", branchMaterial, typeof(Material), false) as Material;
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Bottom Ring distribution", internalRing, 0.001f, 0.999f);
@@ -264,6 +265,7 @@ public class BasicBranches : EditorWindow
     {
         myBranch.seed = seed;
         myBranch.distributionFrequency = frequency;
+        myBranch.materialBranch = branchMaterial;
     }
 
     private void UpdateLenght()
@@ -336,6 +338,7 @@ public class BasicBranches : EditorWindow
         Wlenght = myBranch.weldHeight;
         Wtop = myBranch.weldSpreadTop;
         Wbot = myBranch.weldSpreadBottom;
+        branchMaterial = myBranch.materialBranch;
     }
 
     public void CreateChilds()

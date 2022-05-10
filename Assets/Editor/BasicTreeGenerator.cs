@@ -66,7 +66,8 @@ public class BasicTreeGenerator : EditorWindow
         if (editing == GUI.changed)
         {
             editingTree = false;
-            UpdateFromOriginal();
+            if (rootSelected)
+                UpdateFromOriginal();
         }
     }
 
