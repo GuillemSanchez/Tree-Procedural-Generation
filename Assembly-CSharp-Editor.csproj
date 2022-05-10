@@ -36,8 +36,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\BasicTreeGenerator.cs" />
      <Compile Include="Assets\Editor\BasicMainTrunk.cs" />
+     <Compile Include="Assets\Editor\BasicTreeGenerator.cs" />
+     <Compile Include="Assets\Editor\BasicBranches.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

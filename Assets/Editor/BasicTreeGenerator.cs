@@ -21,6 +21,7 @@ public class BasicTreeGenerator : EditorWindow
 
     bool changed = false;
     List<BasicMainTrunk> myMainGroups = new List<BasicMainTrunk>();
+    List<BasicBranches> myBranchesGroups = new List<BasicBranches>();
 
 
     // Root Vars
@@ -56,7 +57,6 @@ public class BasicTreeGenerator : EditorWindow
                 ShowRootBasics();
             }
 
-            // Button to adding the trunk?
             if (GUILayout.Button("AddTrunk"))
             {
                 AddMainTrunk();
@@ -87,7 +87,6 @@ public class BasicTreeGenerator : EditorWindow
 
     private void ChangeRoot()
     {
-        advancedData = tree.data as TreeData;
 
 
         // tambien ha de haver una funcion que lo haga a la inversa TODO
@@ -137,12 +136,12 @@ public class BasicTreeGenerator : EditorWindow
 
     private void AddMainTrunk()
     {
-        advancedData = tree.data as TreeData;
 
         TreeGroup holder = advancedData.AddGroup(advancedData.root, typeof(TreeGroupBranch));
         myMainGroups.Add(new BasicMainTrunk());
         myMainGroups[myMainGroups.Count - 1].ShowWindow();
         myMainGroups[myMainGroups.Count - 1].GenerateData(advancedData, holder as TreeGroupBranch, this);
+        UpdateTree();
     }
 
 
@@ -174,7 +173,7 @@ public class BasicTreeGenerator : EditorWindow
         groundOffset = advancedData.root.groundOffset;
         LODoverall = advancedData.root.adaptiveLODQuality;
 
-        // Creating Trunks
+        // Creating Trunks and branches
         for (int i = 0; i < advancedData.branchGroups.Length; i++)
         {
             if (advancedData.branchGroups[i].parentGroupID == advancedData.root.uniqueID)
@@ -182,17 +181,36 @@ public class BasicTreeGenerator : EditorWindow
                 myMainGroups.Add(new BasicMainTrunk());
                 myMainGroups[myMainGroups.Count - 1].ShowWindow();
                 myMainGroups[myMainGroups.Count - 1].GenerateData(advancedData, advancedData.branchGroups[i] as TreeGroupBranch, this);
+                myMainGroups[myMainGroups.Count - 1].CreateChilds();
             }
         }
+
+        UpdateTree();
     }
 
     private void UpdateFromOriginal()
     {
-        advancedData = tree.data as TreeData;
         seed = advancedData.root.seed;
         areaSpreed = advancedData.root.rootSpread;
         groundOffset = advancedData.root.groundOffset;
         LODoverall = advancedData.root.adaptiveLODQuality;
+    }
+
+    public void CreateBranches(TreeGroup parent)
+    {
+        TreeGroup holder = advancedData.AddGroup(parent, typeof(TreeGroupBranch));
+        myBranchesGroups.Add(new BasicBranches());
+        myBranchesGroups[myBranchesGroups.Count - 1].ShowWindow();
+        myBranchesGroups[myBranchesGroups.Count - 1].GenerateData(advancedData, holder as TreeGroupBranch, this);
+        UpdateTree();
+    }
+
+    public void CreateOurBranches(TreeGroupBranch myBranch)
+    {
+        myBranchesGroups.Add(new BasicBranches());
+        myBranchesGroups[myBranchesGroups.Count - 1].ShowWindow();
+        myBranchesGroups[myBranchesGroups.Count - 1].GenerateData(advancedData, myBranch as TreeGroupBranch, this);
+        myBranchesGroups[myBranchesGroups.Count - 1].CreateChilds();
     }
 }
 
