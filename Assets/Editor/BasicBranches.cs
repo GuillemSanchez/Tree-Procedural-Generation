@@ -88,6 +88,10 @@ public class BasicBranches : EditorWindow
     float seekTop_ = 0.0f;
     float seekbottom_ = 0.0f;
 
+    float Wlenght = 0.0f;
+    float Wtop = 0.1f;
+    float Wbot = 0.3f;
+
 
 
 
@@ -170,6 +174,10 @@ public class BasicBranches : EditorWindow
         seekTop = EditorGUILayout.Slider("Top of the branch", seekTop, -1.0f, 1.000f);
         seekbottom = EditorGUILayout.Slider("Bottom of the branch", seekbottom, -1.0f, 1.000f);
         seekCurve = EditorGUILayout.CurveField(seekCurve, Color.green, m_CurveRangesB);
+        Wlenght = EditorGUILayout.Slider("Weld deformation lenght", Wlenght, 0.0f, 5.000f);
+        Wtop = EditorGUILayout.Slider("Weld deformation top", Wtop, 0.0f, 1.000f);
+        Wbot = EditorGUILayout.Slider("Weld deformation bot", Wbot, 0.0f, 1.000f);
+
 
         if (GUILayout.Button("Add Branches"))
         {
@@ -297,6 +305,12 @@ public class BasicBranches : EditorWindow
             seekCurve = new AnimationCurve(new Keyframe(0, seekbottom), new Keyframe(1, seekTop));
 
         myBranch.seekCurve = seekCurve;
+
+        // Weld
+
+        myBranch.weldHeight = Wlenght;
+        myBranch.weldSpreadTop = Wtop;
+        myBranch.weldSpreadBottom = Wbot;
     }
 
 
@@ -319,6 +333,9 @@ public class BasicBranches : EditorWindow
         crinklinessCurve = myBranch.crinkCurve;
         seekValue = myBranch.seekBlend;
         seekCurve = myBranch.seekCurve;
+        Wlenght = myBranch.weldHeight;
+        Wtop = myBranch.weldSpreadTop;
+        Wbot = myBranch.weldSpreadBottom;
     }
 
     public void CreateChilds()

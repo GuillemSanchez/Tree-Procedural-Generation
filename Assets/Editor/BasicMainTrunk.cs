@@ -83,6 +83,11 @@ public class BasicMainTrunk : EditorWindow
     float seekTop_ = 0.0f;
     float seekbottom_ = 0.0f;
 
+    // Flare or Weld
+
+    float FWradius = 0.0f;
+    float FWheight = 0.1f;
+    float FWnoise = 0.3f;
 
 
 
@@ -162,6 +167,9 @@ public class BasicMainTrunk : EditorWindow
         seekTop = EditorGUILayout.Slider("Top of the trunk", seekTop, -1.0f, 1.000f);
         seekbottom = EditorGUILayout.Slider("bottom of the trunk", seekbottom, -1.0f, 1.000f);
         seekCurve = EditorGUILayout.CurveField(seekCurve, Color.green, m_CurveRangesB);
+        FWradius = EditorGUILayout.Slider("Root Deformation Radius", FWradius, 0.0f, 5.000f);
+        FWheight = EditorGUILayout.Slider("Root Deformation Height", FWheight, 0.0f, 1.000f);
+        FWnoise = EditorGUILayout.Slider("Root Deformation Noise", FWnoise, 0.0f, 1.000f);
 
         if (GUILayout.Button("Add Branches"))
         {
@@ -289,6 +297,11 @@ public class BasicMainTrunk : EditorWindow
             seekCurve = new AnimationCurve(new Keyframe(0, seekbottom), new Keyframe(1, seekTop));
 
         myBranch.seekCurve = seekCurve;
+
+        // Flare/Weld
+        myBranch.flareSize = FWradius;
+        myBranch.flareNoise = FWnoise;
+        myBranch.flareHeight = FWheight;
     }
 
 
@@ -311,6 +324,9 @@ public class BasicMainTrunk : EditorWindow
         crinklinessCurve = myBranch.crinkCurve;
         seekValue = myBranch.seekBlend;
         seekCurve = myBranch.seekCurve;
+        FWradius = myBranch.flareSize;
+        FWnoise = myBranch.flareNoise;
+        FWheight = myBranch.flareHeight;
     }
 
     public void CreateChilds()
