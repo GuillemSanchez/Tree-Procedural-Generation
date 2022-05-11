@@ -25,6 +25,7 @@ public class BasicTreeGenerator : EditorWindow
     List<BasicLeafs> myLeafsGroups = new List<BasicLeafs>();
 
 
+
     // Root Vars
     int seed = 0;
     float areaSpreed = 1.0f;
@@ -213,6 +214,7 @@ public class BasicTreeGenerator : EditorWindow
         myBranchesGroups[myBranchesGroups.Count - 1].ShowWindow();
         myBranchesGroups[myBranchesGroups.Count - 1].GenerateData(advancedData, myBranch as TreeGroupBranch, this);
         myBranchesGroups[myBranchesGroups.Count - 1].CreateChilds();
+
     }
 
     public void CreateLeafs(TreeGroup parent)
@@ -233,6 +235,37 @@ public class BasicTreeGenerator : EditorWindow
 
     public void DeleteGroup(TreeGroup toDelete)
     {
+        for (int i = 0; i < advancedData.branchGroups.Length; i++)
+        {
+            for (int j = 0; j < myMainGroups.Count; j++)
+            {
+                if (advancedData.branchGroups[i] == myMainGroups[j].myBranch && advancedData.branchGroups[i].parentGroupID == toDelete.uniqueID)
+                {
+                    myMainGroups[j].DeleteGroup();
+                    myMainGroups.Remove(myMainGroups[j]);
+                }
+            }
+            for (int j = 0; j < myBranchesGroups.Count; j++)
+            {
+                if (advancedData.branchGroups[i] == myBranchesGroups[j].myBranch && advancedData.branchGroups[i].parentGroupID == toDelete.uniqueID)
+                {
+                    myBranchesGroups[j].DeleteGroup();
+                    myBranchesGroups.Remove(myBranchesGroups[j]);
+                }
+            }
+
+        }
+        for (int i = 0; i < advancedData.leafGroups.Length; i++)
+        {
+            for (int j = 0; j < myLeafsGroups.Count; j++)
+            {
+                if (advancedData.leafGroups[i] == myLeafsGroups[j].myLeaf && advancedData.leafGroups[i].parentGroupID == toDelete.uniqueID)
+                {
+                    myLeafsGroups[j].DeleteGroup();
+                    myLeafsGroups.Remove(myLeafsGroups[j]);
+                }
+            }
+        }
         advancedData.DeleteGroup(toDelete);
         UpdateTree();
     }

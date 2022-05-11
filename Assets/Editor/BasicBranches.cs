@@ -464,7 +464,7 @@ public class BasicBranches : EditorWindow
         crinklinessBottom_ = crinklinessBottom;
     }
 
-    private void DeleteGroup()
+    public void DeleteGroup()
     {
         myGenerator.DeleteGroup(myBranch);
         this.Close();

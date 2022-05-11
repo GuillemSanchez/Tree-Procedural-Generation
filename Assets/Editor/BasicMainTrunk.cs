@@ -453,9 +453,11 @@ public class BasicMainTrunk : EditorWindow
 
     }
 
-    private void DeleteGroup()
+    public void DeleteGroup()
     {
         myGenerator.DeleteGroup(myBranch);
         this.Close();
     }
+
+
 }

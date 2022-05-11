@@ -169,6 +169,7 @@ public class BasicLeafs : EditorWindow
         {
             UpdateFromOriginal();
         }
+        Debug.Log("my seed" + myLeaf.seed);
     }
 
     private void UpdateDistribution()
@@ -268,7 +269,7 @@ public class BasicLeafs : EditorWindow
             leafMesh = myLeaf.instanceMesh;
             isMesh = true;
         }
-        
+
 
     }
 
@@ -282,7 +283,7 @@ public class BasicLeafs : EditorWindow
         internalGrowth_ = internalGrowth;
     }
 
-    private void DeleteGroup()
+    public void DeleteGroup()
     {
         myGenerator.DeleteGroup(myLeaf);
         this.Close();
