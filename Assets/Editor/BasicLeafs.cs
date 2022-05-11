@@ -66,6 +66,9 @@ public class BasicLeafs : EditorWindow
     float horizontalA = 0.0f;
 
     Material leafMaterial;
+    GameObject leafMesh;
+
+    bool isMesh = false;
 
 
     // Initialaze the Animation curves
@@ -102,8 +105,11 @@ public class BasicLeafs : EditorWindow
         GUILayout.Label("Core Leaf Vars:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Leafs", frequency, 1, 100);
-        // hacer que pueda ser tambien un objeto el material. TODO
-        leafMaterial = EditorGUILayout.ObjectField("Leaf Material", leafMaterial, typeof(Material), false) as Material;
+        isMesh = EditorGUILayout.Toggle("The geometry of the leaf is a Mesh?", isMesh);
+        if (!isMesh)
+            leafMaterial = EditorGUILayout.ObjectField("Leaf Material", leafMaterial, typeof(Material), false) as Material;
+        if (isMesh)
+            leafMesh = EditorGUILayout.ObjectField("Leaf Material", leafMesh, typeof(GameObject), false) as GameObject;
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Bottom Ring distribution", internalRing, 0.001f, 0.999f);
@@ -208,7 +214,19 @@ public class BasicLeafs : EditorWindow
     {
         myLeaf.seed = seed;
         myLeaf.distributionFrequency = frequency;
-        myLeaf.materialLeaf = leafMaterial;
+
+        //myLeaf.
+        if (!isMesh)
+        {
+            myLeaf.materialLeaf = leafMaterial;
+            myLeaf.geometryMode = 0;
+        }
+        else
+        {
+            myLeaf.instanceMesh = leafMesh;
+            myLeaf.geometryMode = 4;
+        }
+
     }
 
     private void UpdateSizeAndAlign()
@@ -226,6 +244,7 @@ public class BasicLeafs : EditorWindow
     }
 
 
+
     private void UpdateFromOriginal()
     {
         distributionCurve = myLeaf.distributionCurve;
@@ -239,13 +258,23 @@ public class BasicLeafs : EditorWindow
         maxLeafSize = myLeaf.size.y;
         horizontalA = myLeaf.horizontalAlign;
         perpendicularA = myLeaf.perpendicularAlign;
-        leafMaterial = myLeaf.materialLeaf;
+        if (myLeaf.geometryMode == 0)
+        {
+            leafMaterial = myLeaf.materialLeaf;
+            isMesh = false;
+        }
+        if (myLeaf.geometryMode == 4)
+        {
+            leafMesh = myLeaf.instanceMesh;
+            isMesh = true;
+        }
         
+
     }
 
     private void UpdateLatest()
     {
-       
+
         angleGrowth_ = angleGrowth;
         externalRing_ = externalRing;
         internalRing_ = internalRing;
