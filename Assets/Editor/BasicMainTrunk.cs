@@ -90,7 +90,19 @@ public class BasicMainTrunk : EditorWindow
     float FWnoise = 0.3f;
 
     Material branchMaterial;
+    bool isFrond = false;
 
+
+    // Fronds Only Vars
+    Material frondMaterial;
+    // 1 - 10
+    int frondCount = 1;
+    // 1 - 10
+    float frondsWidth = 0.2f;
+    AnimationCurve frondsCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
+    float startFronds = 0.0f;
+    float endFronds = 1.0f;
+    float frondsRotation = 0.0f;
 
 
     AnimationCurve crinklinessCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
@@ -129,7 +141,11 @@ public class BasicMainTrunk : EditorWindow
         GUILayout.Label("Core Main Trunk:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Trunk seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of trunks", frequency, 1, 100);
+        isFrond = EditorGUILayout.Toggle("Is a frond?", isFrond);
         branchMaterial = EditorGUILayout.ObjectField("Branch Material", branchMaterial, typeof(Material), false) as Material;
+        if (isFrond)
+            frondMaterial = EditorGUILayout.ObjectField("Frond (leafs) Material", frondMaterial, typeof(Material), false) as Material;
+
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Internal Ring distribution", internalRing, 0.001f, 0.999f);
@@ -173,6 +189,16 @@ public class BasicMainTrunk : EditorWindow
         FWradius = EditorGUILayout.Slider("Root Deformation Radius", FWradius, 0.0f, 5.000f);
         FWheight = EditorGUILayout.Slider("Root Deformation Height", FWheight, 0.0f, 1.000f);
         FWnoise = EditorGUILayout.Slider("Root Deformation Noise", FWnoise, 0.0f, 1.000f);
+        if (isFrond)
+        {
+            GUILayout.Label("Fronds:", EditorStyles.boldLabel);
+            frondCount = EditorGUILayout.IntSlider("Frond Count", frondCount, 1, 10);
+            frondsWidth = EditorGUILayout.Slider("Frond Width", frondsWidth, 0.1f, 10.0f);
+            EditorGUILayout.CurveField(frondsCurve, Color.green, m_CurveRangesA);
+            startFronds = EditorGUILayout.Slider("Where do the fronds start", startFronds, 0.0f, 0.999f);
+            endFronds = EditorGUILayout.Slider("Where do the fronds end", endFronds, 0.001f, 1f);
+            frondsRotation = EditorGUILayout.Slider("Rotation of the fronds", frondsRotation, 0.0f, 1f);
+        }
 
         if (GUILayout.Button("Add Branches"))
         {
@@ -210,6 +236,8 @@ public class BasicMainTrunk : EditorWindow
             UpdateLenght();
             UpdateRadius();
             UpdateMisc();
+            if (isFrond)
+                UpdateFronds();
             advancedData.UpdateFrequency(myBranch.uniqueID);
             myBranch.UpdateSeed();
             myGenerator.UpdateTree();
@@ -265,6 +293,15 @@ public class BasicMainTrunk : EditorWindow
         myBranch.seed = seed;
         myBranch.distributionFrequency = frequency;
         myBranch.materialBranch = branchMaterial;
+        if (isFrond)
+        {
+            myBranch.geometryMode = TreeGroupBranch.GeometryMode.BranchFrond;
+            myBranch.materialFrond = frondMaterial;
+        }
+        else
+        {
+            myBranch.geometryMode = TreeGroupBranch.GeometryMode.Branch;
+        }
     }
 
     private void UpdateLenght()
@@ -313,6 +350,19 @@ public class BasicMainTrunk : EditorWindow
         myBranch.flareHeight = FWheight;
     }
 
+    private void UpdateFronds()
+    {
+        myBranch.frondCount = frondCount;
+        myBranch.frondWidth = frondsWidth;
+        myBranch.frondCurve = frondsCurve;
+        if (startFronds >= endFronds)
+        {
+            endFronds = startFronds + 0.001f;
+        }
+        myBranch.frondRange = new Vector2(startFronds, endFronds);
+        myBranch.frondRotation = frondsRotation;
+    }
+
 
     private void UpdateFromOriginal()
     {
@@ -337,6 +387,21 @@ public class BasicMainTrunk : EditorWindow
         FWnoise = myBranch.flareNoise;
         FWheight = myBranch.flareHeight;
         branchMaterial = myBranch.materialBranch;
+        frondMaterial = myBranch.materialFrond;
+        if (myBranch.geometryMode == TreeGroupBranch.GeometryMode.Branch)
+            isFrond = false;
+        if (myBranch.geometryMode == TreeGroupBranch.GeometryMode.BranchFrond)
+            isFrond = true;
+
+        if (isFrond)
+        {
+            frondCount = myBranch.frondCount;
+            frondsWidth = myBranch.frondWidth;
+            frondsCurve = myBranch.frondCurve;
+            startFronds = myBranch.frondRange.x;
+            endFronds = myBranch.frondRange.y;
+            frondsRotation = myBranch.frondRotation;
+        }
     }
 
     public void CreateChilds()

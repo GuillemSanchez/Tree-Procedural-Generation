@@ -92,6 +92,23 @@ public class BasicBranches : EditorWindow
     float Wbot = 0.3f;
 
     Material branchMaterial;
+    bool isFrond = false;
+
+
+    // Fronds Only Vars
+    Material frondMaterial;
+    // 1 - 10
+    int frondCount = 1;
+    // 1 - 10
+    float frondsWidth = 0.2f;
+    AnimationCurve frondsCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
+    float startFronds = 0.0f;
+    float endFronds = 1.0f;
+    float frondsRotation = 0.0f;
+
+
+
+
 
 
     AnimationCurve crinklinessCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
@@ -133,7 +150,11 @@ public class BasicBranches : EditorWindow
         GUILayout.Label("Core Branches:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Branches", frequency, 1, 100);
+        isFrond = EditorGUILayout.Toggle("Is a frond?", isFrond);
         branchMaterial = EditorGUILayout.ObjectField("Branch Material", branchMaterial, typeof(Material), false) as Material;
+        if (isFrond)
+            frondMaterial = EditorGUILayout.ObjectField("Frond (leafs) Material", frondMaterial, typeof(Material), false) as Material;
+
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
         internalRing = EditorGUILayout.Slider("Bottom Ring distribution", internalRing, 0.001f, 0.999f);
@@ -177,6 +198,18 @@ public class BasicBranches : EditorWindow
         Wlenght = EditorGUILayout.Slider("Weld deformation lenght", Wlenght, 0.0f, 5.000f);
         Wtop = EditorGUILayout.Slider("Weld deformation top", Wtop, 0.0f, 1.000f);
         Wbot = EditorGUILayout.Slider("Weld deformation bot", Wbot, 0.0f, 1.000f);
+        // Fronds UI
+        if (isFrond)
+        {
+            GUILayout.Label("Fronds:", EditorStyles.boldLabel);
+            frondCount = EditorGUILayout.IntSlider("Frond Count", frondCount, 1, 10);
+            frondsWidth = EditorGUILayout.Slider("Frond Width", frondsWidth, 0.1f, 10.0f);
+            EditorGUILayout.CurveField(frondsCurve, Color.green, m_CurveRangesA);
+            startFronds = EditorGUILayout.Slider("Where do the fronds start", startFronds, 0.0f, 0.999f);
+            endFronds = EditorGUILayout.Slider("Where do the fronds end", endFronds, 0.001f, 1f);
+            frondsRotation = EditorGUILayout.Slider("Rotation of the fronds", frondsRotation, 0.0f, 1f);
+        }
+
 
 
         if (GUILayout.Button("Add Branches"))
@@ -215,6 +248,8 @@ public class BasicBranches : EditorWindow
             UpdateLenght();
             UpdateRadius();
             UpdateMisc();
+            if (isFrond)
+                UpdateFronds();
             advancedData.UpdateFrequency(myBranch.uniqueID);
             myBranch.UpdateSeed();
             myGenerator.UpdateTree();
@@ -270,6 +305,15 @@ public class BasicBranches : EditorWindow
         myBranch.seed = seed;
         myBranch.distributionFrequency = frequency;
         myBranch.materialBranch = branchMaterial;
+        if (isFrond)
+        {
+            myBranch.geometryMode = TreeGroupBranch.GeometryMode.BranchFrond;
+            myBranch.materialFrond = frondMaterial;
+        }
+        else
+        {
+            myBranch.geometryMode = TreeGroupBranch.GeometryMode.Branch;
+        }
     }
 
     private void UpdateLenght()
@@ -319,6 +363,19 @@ public class BasicBranches : EditorWindow
         myBranch.weldSpreadBottom = Wbot;
     }
 
+    private void UpdateFronds()
+    {
+        myBranch.frondCount = frondCount;
+        myBranch.frondWidth = frondsWidth;
+        myBranch.frondCurve = frondsCurve;
+        if (startFronds >= endFronds)
+        {
+            endFronds = startFronds + 0.001f;
+        }
+        myBranch.frondRange = new Vector2(startFronds, endFronds);
+        myBranch.frondRotation = frondsRotation;
+    }
+
 
     private void UpdateFromOriginal()
     {
@@ -343,6 +400,22 @@ public class BasicBranches : EditorWindow
         Wtop = myBranch.weldSpreadTop;
         Wbot = myBranch.weldSpreadBottom;
         branchMaterial = myBranch.materialBranch;
+        frondMaterial = myBranch.materialFrond;
+        if (myBranch.geometryMode == TreeGroupBranch.GeometryMode.Branch)
+            isFrond = false;
+        if (myBranch.geometryMode == TreeGroupBranch.GeometryMode.BranchFrond)
+            isFrond = true;
+
+        if (isFrond)
+        {
+            frondCount = myBranch.frondCount;
+            frondsWidth = myBranch.frondWidth;
+            frondsCurve = myBranch.frondCurve;
+            startFronds = myBranch.frondRange.x;
+            endFronds = myBranch.frondRange.y;
+            frondsRotation = myBranch.frondRotation;
+        }
+
     }
 
     public void CreateChilds()
