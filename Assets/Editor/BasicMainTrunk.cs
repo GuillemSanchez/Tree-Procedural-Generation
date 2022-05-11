@@ -179,6 +179,11 @@ public class BasicMainTrunk : EditorWindow
             CreateBranches();
         }
 
+        if (GUILayout.Button("Add Leafs"))
+        {
+            CreateLeafs();
+        }
+
         if (GUILayout.Button("Delete this Group"))
         {
             DeleteGroup();
@@ -345,6 +350,14 @@ public class BasicMainTrunk : EditorWindow
             }
         }
 
+        for (int i = 0; i < advancedData.leafGroups.Length; i++)
+        {
+            if (advancedData.leafGroups[i].parentGroupID == myBranch.uniqueID)
+            {
+                myGenerator.CreateOurLeafs(advancedData.leafGroups[i]);
+            }
+        }
+
     }
 
 
@@ -352,6 +365,11 @@ public class BasicMainTrunk : EditorWindow
     public void CreateBranches()
     {
         myGenerator.CreateBranches(myBranch);
+    }
+
+    public void CreateLeafs()
+    {
+        myGenerator.CreateLeafs(myBranch);
     }
 
     private void UpdateLatest()

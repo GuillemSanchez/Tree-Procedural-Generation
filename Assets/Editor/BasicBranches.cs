@@ -12,7 +12,6 @@ public class BasicBranches : EditorWindow
 {
 
     // Vars ---------------------------------------------------
-
     BasicTreeGenerator myGenerator;
     TreeData advancedData;
     public TreeGroupBranch myBranch;
@@ -185,6 +184,11 @@ public class BasicBranches : EditorWindow
             CreateBranches();
         }
 
+        if (GUILayout.Button("Add Leafs"))
+        {
+            CreateLeafs();
+        }
+
         if (GUILayout.Button("Delete this Group"))
         {
             DeleteGroup();
@@ -351,12 +355,25 @@ public class BasicBranches : EditorWindow
                 myGenerator.CreateOurBranches(advancedData.branchGroups[i]);
             }
         }
+
+        for (int i = 0; i < advancedData.leafGroups.Length; i++)
+        {
+            if (advancedData.leafGroups[i].parentGroupID == myBranch.uniqueID)
+            {
+                myGenerator.CreateOurLeafs(advancedData.leafGroups[i]);
+            }
+        }
     }
 
 
     public void CreateBranches()
     {
         myGenerator.CreateBranches(myBranch);
+    }
+
+    public void CreateLeafs()
+    {
+        myGenerator.CreateLeafs(myBranch);
     }
 
     private void UpdateLatest()

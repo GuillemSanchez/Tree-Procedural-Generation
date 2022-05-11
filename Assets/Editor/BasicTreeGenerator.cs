@@ -22,6 +22,7 @@ public class BasicTreeGenerator : EditorWindow
     bool changed = false;
     List<BasicMainTrunk> myMainGroups = new List<BasicMainTrunk>();
     List<BasicBranches> myBranchesGroups = new List<BasicBranches>();
+    List<BasicLeafs> myLeafsGroups = new List<BasicLeafs>();
 
 
     // Root Vars
@@ -212,6 +213,22 @@ public class BasicTreeGenerator : EditorWindow
         myBranchesGroups[myBranchesGroups.Count - 1].ShowWindow();
         myBranchesGroups[myBranchesGroups.Count - 1].GenerateData(advancedData, myBranch as TreeGroupBranch, this);
         myBranchesGroups[myBranchesGroups.Count - 1].CreateChilds();
+    }
+
+    public void CreateLeafs(TreeGroup parent)
+    {
+        TreeGroup holder = advancedData.AddGroup(parent, typeof(TreeGroupLeaf));
+        myLeafsGroups.Add(new BasicLeafs());
+        myLeafsGroups[myLeafsGroups.Count - 1].ShowWindow();
+        myLeafsGroups[myLeafsGroups.Count - 1].GenerateData(advancedData, holder as TreeGroupLeaf, this);
+        UpdateTree();
+    }
+
+    public void CreateOurLeafs(TreeGroupLeaf myLeaf)
+    {
+        myLeafsGroups.Add(new BasicLeafs());
+        myLeafsGroups[myLeafsGroups.Count - 1].ShowWindow();
+        myLeafsGroups[myLeafsGroups.Count - 1].GenerateData(advancedData, myLeaf as TreeGroupLeaf, this);
     }
 
     public void DeleteGroup(TreeGroup toDelete)
