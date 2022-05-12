@@ -180,7 +180,7 @@ public class BasicBranches : EditorWindow
         // Radius UI
         GUILayout.Label("Radius:", EditorStyles.boldLabel);
         relativeLength = EditorGUILayout.Toggle("Relative Radius to Length", relativeLength);
-        radiusValue = EditorGUILayout.Slider("Average Radius", radiusValue, 0.1f, 5.000f);
+        radiusValue = EditorGUILayout.Slider("Radius", radiusValue, 0.1f, 5.000f);
         topRadius = EditorGUILayout.Slider("Top of the branch", topRadius, 0.100f, 1.000f);
         bottomRadius = EditorGUILayout.Slider("Bottom of the branch", bottomRadius, 0.100f, 1.000f);
         capSmoothing = EditorGUILayout.Slider("Does the top of the branch look smoothed", capSmoothing, 0.000f, 1.000f);

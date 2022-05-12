@@ -171,10 +171,10 @@ public class BasicMainTrunk : EditorWindow
         // Radius UI
         GUILayout.Label("Radius:", EditorStyles.boldLabel);
         relativeLength = EditorGUILayout.Toggle("Relative Radius to Length", relativeLength);
-        radiusValue = EditorGUILayout.Slider("Average Radius", radiusValue, 0.1f, 5.000f);
+        radiusValue = EditorGUILayout.Slider("Radius", radiusValue, 0.1f, 5.000f);
         topRadius = EditorGUILayout.Slider("Top of the Trunk", topRadius, 0.100f, 1.000f);
         bottomRadius = EditorGUILayout.Slider("Bottom of the Trunk", bottomRadius, 0.100f, 1.000f);
-        capSmoothing = EditorGUILayout.Slider("Does the top of the trunk look smoothed", capSmoothing, 0.000f, 1.000f);
+        capSmoothing = EditorGUILayout.Slider("Top smoothed", capSmoothing, 0.000f, 1.000f);
         EditorGUILayout.CurveField(radiusCurve, Color.green, m_CurveRangesA);
         // Misc UI
         GUILayout.Label("Misc:", EditorStyles.boldLabel);
