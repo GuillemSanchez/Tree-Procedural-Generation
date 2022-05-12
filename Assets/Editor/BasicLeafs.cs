@@ -159,7 +159,7 @@ public class BasicLeafs : EditorWindow
             UpdateSizeAndAlign();
             advancedData.UpdateFrequency(myLeaf.uniqueID);
             myLeaf.UpdateSeed();
-            myGenerator.UpdateTree();
+            myGenerator.PreviewTree();
             UpdateLatest();
         }
         else

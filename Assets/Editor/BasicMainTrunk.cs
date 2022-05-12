@@ -236,7 +236,7 @@ public class BasicMainTrunk : EditorWindow
                 UpdateFronds();
             advancedData.UpdateFrequency(myBranch.uniqueID);
             myBranch.UpdateSeed();
-            myGenerator.UpdateTree();
+            myGenerator.PreviewTree();
             UpdateLatest();
         }
         else

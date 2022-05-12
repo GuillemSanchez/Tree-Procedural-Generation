@@ -63,6 +63,10 @@ public class BasicTreeGenerator : EditorWindow
             {
                 AddMainTrunk();
             }
+             if (GUILayout.Button("Save Mesh"))
+            {
+                AddMainTrunk();
+            }
         }
         editingTree = true;
         if (editing == GUI.changed)
@@ -82,14 +86,6 @@ public class BasicTreeGenerator : EditorWindow
             }
             changed = false;
         }
-    }
-
-
-
-    void Update()
-    {
-        
-
     }
 
     private void ChangeRoot()
@@ -165,8 +161,14 @@ public class BasicTreeGenerator : EditorWindow
 
 
     public void UpdateTree()
+    { 
+        Material[] materials;
+        advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
+        AssignMaterials(tree.GetComponent<Renderer>(), materials);
+    }
+
+    public void PreviewTree()
     {
-        
         Material[] materials;
         advancedData.PreviewMesh(tree.transform.worldToLocalMatrix, out materials);
         AssignMaterials(tree.GetComponent<Renderer>(), materials);
