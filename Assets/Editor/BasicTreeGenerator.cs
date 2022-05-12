@@ -269,5 +269,6 @@ public class BasicTreeGenerator : EditorWindow
         advancedData.DeleteGroup(toDelete);
         UpdateTree();
     }
+
 }
 
