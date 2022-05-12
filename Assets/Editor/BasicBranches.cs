@@ -144,9 +144,9 @@ public class BasicBranches : EditorWindow
 
     private void OnGUI()
     {
-
-        bool can = GUI.changed;
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        bool can = GUI.changed;
+
         GUILayout.Label("Core Branches:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Branches", frequency, 1, 100);
@@ -183,7 +183,7 @@ public class BasicBranches : EditorWindow
         radiusValue = EditorGUILayout.Slider("Radius", radiusValue, 0.1f, 5.000f);
         topRadius = EditorGUILayout.Slider("Top of the branch", topRadius, 0.100f, 1.000f);
         bottomRadius = EditorGUILayout.Slider("Bottom of the branch", bottomRadius, 0.100f, 1.000f);
-        capSmoothing = EditorGUILayout.Slider("Does the top of the branch look smoothed", capSmoothing, 0.000f, 1.000f);
+        capSmoothing = EditorGUILayout.Slider("Top smoothed", capSmoothing, 0.000f, 1.000f);
         EditorGUILayout.CurveField(radiusCurve, Color.green, m_CurveRangesA);
         // Misc UI
         GUILayout.Label("Misc:", EditorStyles.boldLabel);
@@ -233,11 +233,7 @@ public class BasicBranches : EditorWindow
             editingTree = true;
         }
         EditorGUILayout.EndScrollView();
-    }
 
-    void Update()
-    {
-        //Mirar si la pestaña seleccionada es esta
         if (editingTree)
         {
             // Updating Everypart of the main trunk 
@@ -259,6 +255,12 @@ public class BasicBranches : EditorWindow
         {
             UpdateFromOriginal();
         }
+    }
+
+    void Update()
+    {
+        //Mirar si la pestaña seleccionada es esta
+
     }
 
     private void UpdateDistribution()

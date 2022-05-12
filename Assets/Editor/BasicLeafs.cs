@@ -100,8 +100,9 @@ public class BasicLeafs : EditorWindow
 
     private void OnGUI()
     {
-        bool can = GUI.changed;
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        bool can = GUI.changed;
+        
         GUILayout.Label("Core Leaf Vars:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Leafs", frequency, 1, 100);
@@ -147,11 +148,7 @@ public class BasicLeafs : EditorWindow
             editingTree = true;
         }
         EditorGUILayout.EndScrollView();
-    }
 
-    void Update()
-    {
-        //Mirar si la pestaña seleccionada es esta
         if (editingTree)
         {
             // Updating Everypart of the main trunk 
@@ -169,7 +166,12 @@ public class BasicLeafs : EditorWindow
         {
             UpdateFromOriginal();
         }
-        Debug.Log("my seed" + myLeaf.seed);
+    }
+
+    void Update()
+    {
+        //Mirar si la pestaña seleccionada es esta
+        
     }
 
     private void UpdateDistribution()

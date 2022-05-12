@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using TreeEditor;
 using UnityEngine.UIElements;
+using UnityEditor.SceneManagement;
 
 public class BasicTreeGenerator : EditorWindow
 {
@@ -16,7 +17,6 @@ public class BasicTreeGenerator : EditorWindow
     // Core Variables
     Tree tree;
     TreeData advancedData;
-
 
 
     bool changed = false;
@@ -71,10 +71,7 @@ public class BasicTreeGenerator : EditorWindow
             if (rootSelected)
                 UpdateFromOriginal();
         }
-    }
 
-    void Update()
-    {
         if (editingTree)
         {
             if (rootSelected && rootWindow && this.hasFocus)
@@ -85,6 +82,13 @@ public class BasicTreeGenerator : EditorWindow
             }
             changed = false;
         }
+    }
+
+
+
+    void Update()
+    {
+        
 
     }
 
@@ -162,8 +166,9 @@ public class BasicTreeGenerator : EditorWindow
 
     public void UpdateTree()
     {
+        
         Material[] materials;
-        advancedData.UpdateMesh(tree.transform.worldToLocalMatrix, out materials);
+        advancedData.PreviewMesh(tree.transform.worldToLocalMatrix, out materials);
         AssignMaterials(tree.GetComponent<Renderer>(), materials);
     }
 

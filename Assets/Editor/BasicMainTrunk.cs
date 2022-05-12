@@ -135,9 +135,9 @@ public class BasicMainTrunk : EditorWindow
 
     private void OnGUI()
     {
-
-        bool can = GUI.changed;
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        bool can = GUI.changed;
+
         GUILayout.Label("Core Main Trunk:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Trunk seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of trunks", frequency, 1, 100);
@@ -221,11 +221,7 @@ public class BasicMainTrunk : EditorWindow
             editingTree = true;
         }
         EditorGUILayout.EndScrollView();
-    }
 
-    void Update()
-    {
-        //Mirar si la pestaña seleccionada es esta
         if (editingTree)
         {
             // Updating Everypart of the main trunk 
@@ -247,6 +243,13 @@ public class BasicMainTrunk : EditorWindow
         {
             UpdateFromOriginal();
         }
+        
+    }
+
+    void Update()
+    {
+        //Mirar si la pestaña seleccionada es esta
+
     }
 
     private void UpdateDistribution()
