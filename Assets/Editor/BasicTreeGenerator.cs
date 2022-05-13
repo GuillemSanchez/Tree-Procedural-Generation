@@ -65,7 +65,7 @@ public class BasicTreeGenerator : EditorWindow
             }
              if (GUILayout.Button("Save Mesh"))
             {
-                AddMainTrunk();
+                UpdateTree();
             }
         }
         editingTree = true;
@@ -82,7 +82,7 @@ public class BasicTreeGenerator : EditorWindow
             {
                 ChangeRoot();
                 if (changed)
-                    UpdateTree();
+                    PreviewTree();
             }
             changed = false;
         }
