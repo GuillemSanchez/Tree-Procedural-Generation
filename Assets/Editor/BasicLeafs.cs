@@ -102,30 +102,30 @@ public class BasicLeafs : EditorWindow
     {
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
         bool can = GUI.changed;
-        
+
         GUILayout.Label("Core Leaf Vars:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Leafs", frequency, 1, 100);
-        isMesh = EditorGUILayout.Toggle("The geometry of the leaf is a Mesh?", isMesh);
+        isMesh = EditorGUILayout.Toggle((new GUIContent("Geometry Mesh?", "Is the geometry of the leaf a Mesh? If its a Plane leave it unmarked.")), isMesh);
         if (!isMesh)
             leafMaterial = EditorGUILayout.ObjectField("Leaf Material", leafMaterial, typeof(Material), false) as Material;
         if (isMesh)
             leafMesh = EditorGUILayout.ObjectField("Leaf Material", leafMesh, typeof(GameObject), false) as GameObject;
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
-        internalRing = EditorGUILayout.Slider("Bottom Ring distribution", internalRing, 0.001f, 0.999f);
-        externalRing = EditorGUILayout.Slider("Top Ring distribution", externalRing, 0.002f, 1.000f);
+        internalRing = EditorGUILayout.Slider((new GUIContent("Min height Distribution", "Minimum height where one of this leafs can be.")), internalRing, 0.001f, 0.999f);
+        externalRing = EditorGUILayout.Slider((new GUIContent("Max height Distribution", "Max height where one of this leafs can be.")), externalRing, 0.002f, 1.000f);
         EditorGUILayout.CurveField(distributionCurve, Color.green, m_CurveRangesA);
         // Growth UI
         GUILayout.Label("Growth:", EditorStyles.boldLabel);
-        growthtotal = EditorGUILayout.Slider("Growth general", growthtotal, 0.000f, 1.000f);
-        internalGrowth = EditorGUILayout.Slider("Bottom Growth", internalGrowth, 0.000f, 1.000f);
-        externalGrowth = EditorGUILayout.Slider("Top Growth", externalGrowth, 0.000f, 1.000f);
+        growthtotal = EditorGUILayout.Slider((new GUIContent("Growth Value", "This value is the level of influence that the next 2 Sliders and Curve will have on the leafs.")), growthtotal, 0.000f, 1.000f);
+        internalGrowth = EditorGUILayout.Slider((new GUIContent("Base Growth", "How much will grow the leafs that are near the base.")), internalGrowth, 0.000f, 1.000f);
+        externalGrowth = EditorGUILayout.Slider((new GUIContent("Top Growth", "How much will grow the leafs that are near the top.")), externalGrowth, 0.000f, 1.000f);
         EditorGUILayout.CurveField(growthCurve, Color.green, m_CurveRangesA);
         // Angle UI
         GUILayout.Label("Growth Angle:", EditorStyles.boldLabel);
-        angleMax = EditorGUILayout.Slider("How much afects the angle", angleMax, 0.000f, 1.000f);
-        angleGrowth = EditorGUILayout.Slider("Angle of growth", angleGrowth, -1.000f, 1.000f);
+        angleMax = EditorGUILayout.Slider((new GUIContent("Angle Value", "This value is the level of influence that the next Slider and Curve will have on the leafs.")), angleMax, 0.000f, 1.000f);
+        angleGrowth = EditorGUILayout.Slider((new GUIContent("P. Base <-> P. Top", "If is -1 will point to the Base and if is +1 will point to the top.")), angleGrowth, -1.000f, 1.000f);
         EditorGUILayout.CurveField(growthAngleCurve, Color.green, m_CurveRangesB);
         // Shape UI
         GUILayout.Label("Shape", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
@@ -171,7 +171,7 @@ public class BasicLeafs : EditorWindow
     void Update()
     {
         //Mirar si la pestaña seleccionada es esta
-        
+
     }
 
     private void UpdateDistribution()

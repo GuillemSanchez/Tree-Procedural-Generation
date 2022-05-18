@@ -150,54 +150,49 @@ public class BasicBranches : EditorWindow
         GUILayout.Label("Core Branches:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
         seed = EditorGUILayout.IntSlider("Seed", seed, 1, 999999);
         frequency = EditorGUILayout.IntSlider("Quantity of Branches", frequency, 1, 100);
-        isFrond = EditorGUILayout.Toggle("Is a frond?", isFrond);
+        isFrond = EditorGUILayout.Toggle(new GUIContent("Is a frond?", "A frond basically is a branch that also have a leaf following it. Is usefull to modify the form of the leaf."), isFrond);
         branchMaterial = EditorGUILayout.ObjectField("Branch Material", branchMaterial, typeof(Material), false) as Material;
         if (isFrond)
             frondMaterial = EditorGUILayout.ObjectField("Frond (leafs) Material", frondMaterial, typeof(Material), false) as Material;
 
         // Distribution UI
         GUILayout.Label("Distribution:", EditorStyles.boldLabel);
-        internalRing = EditorGUILayout.Slider("Bottom Ring distribution", internalRing, 0.001f, 0.999f);
-        externalRing = EditorGUILayout.Slider("Top Ring distribution", externalRing, 0.002f, 1.000f);
+        internalRing = EditorGUILayout.Slider((new GUIContent("Min height Distribution", "Minimum height where one of this branches can be.")), internalRing, 0.001f, 0.999f);
+        externalRing = EditorGUILayout.Slider((new GUIContent("Max height Distribution", "Max height where one of this branches can be.")), externalRing, 0.002f, 1.000f);
         EditorGUILayout.CurveField(distributionCurve, Color.green, m_CurveRangesA);
         // Growth UI
         GUILayout.Label("Growth:", EditorStyles.boldLabel);
-        growthtotal = EditorGUILayout.Slider("Growth general", growthtotal, 0.000f, 1.000f);
-        internalGrowth = EditorGUILayout.Slider("Bottom Growth", internalGrowth, 0.000f, 1.000f);
-        externalGrowth = EditorGUILayout.Slider("Top Growth", externalGrowth, 0.000f, 1.000f);
+        growthtotal = EditorGUILayout.Slider((new GUIContent("Growth Value", "This value is the level of influence that the next 2 Sliders and Curve will have on the branches.")), growthtotal, 0.000f, 1.000f);
+        internalGrowth = EditorGUILayout.Slider((new GUIContent("Base Growth", "How much will grow the branches that are near the base.")), internalGrowth, 0.000f, 1.000f);
+        externalGrowth = EditorGUILayout.Slider((new GUIContent("Top Growth", "How much will grow the branches that are near the top.")), externalGrowth, 0.000f, 1.000f);
         EditorGUILayout.CurveField(growthCurve, Color.green, m_CurveRangesA);
         // Angle UI
         GUILayout.Label("Growth Angle:", EditorStyles.boldLabel);
-        angleMax = EditorGUILayout.Slider("How much afects the angle", angleMax, 0.000f, 1.000f);
-        angleGrowth = EditorGUILayout.Slider("Angle of growth", angleGrowth, -1.000f, 1.000f);
+        angleMax = EditorGUILayout.Slider((new GUIContent("Angle Value", "This value is the level of influence that the next Slider and Curve will have on the branches.")), angleMax, 0.000f, 1.000f);
+        angleGrowth = EditorGUILayout.Slider((new GUIContent("P. Base <-> P. Top", "If is -1 will point to the Base and if is +1 will point to the top.")), angleGrowth, -1.000f, 1.000f);
         EditorGUILayout.CurveField(growthAngleCurve, Color.green, m_CurveRangesB);
         // Shape UI
-        GUILayout.Label("Shape", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
-        // Lenght UI
         GUILayout.Label("Lenght:", EditorStyles.boldLabel);
         maxLenght = EditorGUILayout.Slider("Max lenght", maxLenght, 0.1f, 49.9f);
         minLenght = EditorGUILayout.Slider("Min lenght", minLenght, 0.2f, 50.0f);
         // Radius UI
         GUILayout.Label("Radius:", EditorStyles.boldLabel);
-        relativeLength = EditorGUILayout.Toggle("Relative Radius to Length", relativeLength);
+        relativeLength = EditorGUILayout.Toggle(new GUIContent("Relative Radius to lenght", "Is the radius relative to the lenght of the Branch?"), relativeLength);
         radiusValue = EditorGUILayout.Slider("Radius", radiusValue, 0.1f, 5.000f);
-        topRadius = EditorGUILayout.Slider("Top of the branch", topRadius, 0.100f, 1.000f);
-        bottomRadius = EditorGUILayout.Slider("Bottom of the branch", bottomRadius, 0.100f, 1.000f);
-        capSmoothing = EditorGUILayout.Slider("Top smoothed", capSmoothing, 0.000f, 1.000f);
+        topRadius = EditorGUILayout.Slider("Top of the Branch", topRadius, 0.100f, 1.000f);
+        bottomRadius = EditorGUILayout.Slider("Base of the Branch", bottomRadius, 0.100f, 1.000f);
+        capSmoothing = EditorGUILayout.Slider(new GUIContent("Top Smoothed", "Level of rounding on the top of the Branch."), capSmoothing, 0.000f, 1.000f);
         EditorGUILayout.CurveField(radiusCurve, Color.green, m_CurveRangesA);
         // Misc UI
         GUILayout.Label("Misc:", EditorStyles.boldLabel);
         crinklinessValue = EditorGUILayout.Slider("Crinkliness", crinklinessValue, 0.0f, 1.000f);
-        crinklinessTop = EditorGUILayout.Slider("Top of the branch", crinklinessTop, 0.0f, 1.000f);
-        crinklinessBottom = EditorGUILayout.Slider("Bottom of the branch", crinklinessBottom, 0.0f, 1.000f);
+        crinklinessTop = EditorGUILayout.Slider("Top of the Branch", crinklinessTop, 0.0f, 1.000f);
+        crinklinessBottom = EditorGUILayout.Slider("Base of the Branch", crinklinessBottom, 0.0f, 1.000f);
         crinklinessCurve = EditorGUILayout.CurveField(crinklinessCurve, Color.green, m_CurveRangesA);
-        seekValue = EditorGUILayout.Slider("Seek Sun", seekValue, 0.0f, 1.000f);
-        seekTop = EditorGUILayout.Slider("Top of the branch", seekTop, -1.0f, 1.000f);
-        seekbottom = EditorGUILayout.Slider("Bottom of the branch", seekbottom, -1.0f, 1.000f);
+        seekValue = EditorGUILayout.Slider(new GUIContent("Seek Value", "How much influences the two next Sliders."), seekValue, 0.0f, 1.000f);
+        seekTop = EditorGUILayout.Slider("Earth <-> Sun (Top)", seekTop, -1.0f, 1.000f);
+        seekbottom = EditorGUILayout.Slider("Earth <-> Sun (Base)", seekbottom, -1.0f, 1.000f);
         seekCurve = EditorGUILayout.CurveField(seekCurve, Color.green, m_CurveRangesB);
-        Wlenght = EditorGUILayout.Slider("Weld deformation lenght", Wlenght, 0.0f, 5.000f);
-        Wtop = EditorGUILayout.Slider("Weld deformation top", Wtop, 0.0f, 1.000f);
-        Wbot = EditorGUILayout.Slider("Weld deformation bot", Wbot, 0.0f, 1.000f);
         // Fronds UI
         if (isFrond)
         {
