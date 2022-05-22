@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{bc8d7cab-5326-7e78-4360-0bf012a96ac2}</ProjectGuid>
+    <ProjectGuid>{d105e6c2-c659-a67b-659d-35bc63e269b9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -36,10 +36,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\BasicMainTrunk.cs" />
-     <Compile Include="Assets\Editor\BasicTreeGenerator.cs" />
-     <Compile Include="Assets\Editor\BasicBranches.cs" />
-     <Compile Include="Assets\Editor\BasicLeafs.cs" />
+     <Compile Include="Assets\Editor\Generate Editor\BasicMainTrunk.cs" />
+     <Compile Include="Assets\Editor\Generate Editor\BasicLeafs.cs" />
+     <Compile Include="Assets\Editor\Condition Editor\TreeConditions.cs" />
+     <Compile Include="Assets\Editor\Generate Editor\BasicTreeGenerator.cs" />
+     <Compile Include="Assets\Editor\Generate Editor\BasicBranches.cs" />
+     <Compile Include="Assets\Editor\Condition Editor\ConditionEditor.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -236,7 +238,7 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-        <HintPath>C:/Users/root/Documents/GitHub/Tree Procedural Generation/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+        <HintPath>C:/Users/root/Documents/GitHub/Tree-Procedural-Generation/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -585,58 +587,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{a8c79deb-c6b1-f245-1ef7-6bc73b1eea69}</Project>
+      <Name>Assembly-CSharp</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{897fe64a-209a-20e1-e967-4fefce31a620}</Project>
+      <Project>{e77cc6c6-e3b2-7230-16b7-f5787e3abaab}</Project>
       <Name>UnityEditor.TestRunner</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{f49ab09b-3562-65b0-6992-ccc4cabc33b9}</Project>
+      <Project>{73dbf63a-e2e0-92fb-cd2a-3e74ae450a55}</Project>
       <Name>UnityEngine.TestRunner</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{dafeb864-bbb8-ea14-809f-d7f83a84146b}</Project>
+      <Project>{b84e64df-35ab-7dae-bca6-fcdc7964482d}</Project>
       <Name>Unity.Timeline.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.VSCode.Editor.csproj">
-      <Project>{8b9d3ebe-b18c-a650-c8ba-9b915f7b1919}</Project>
+      <Project>{49102cd0-6f27-6682-014c-60184144e048}</Project>
       <Name>Unity.VSCode.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
-      <Project>{f09a9e79-c0b0-fd62-9378-ba05258a6c24}</Project>
+      <Project>{1f5028a7-c583-08bf-524b-5ff0c4d84412}</Project>
       <Name>Unity.TextMeshPro.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{de7a4715-c3bf-76b4-0361-ebd33bd0b786}</Project>
+      <Project>{c191a34e-7e7b-3ae9-79f4-f4eee0e02818}</Project>
       <Name>UnityEngine.UI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{d9562857-e4cf-8d33-0c80-0d1a6770c9fc}</Project>
+      <Project>{e8971419-bdd8-7fc1-348a-f0f25c2d5a30}</Project>
       <Name>Unity.Timeline</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{cd8d6e72-a563-f1ec-a051-381516144ccb}</Project>
+      <Project>{e46c3ae4-3fef-5811-6cb4-5d303210a2d7}</Project>
       <Name>Unity.Rider.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
-      <Project>{8617bd83-45b3-5360-dd8a-e74d8070a8dd}</Project>
+      <Project>{0b71e5cb-1864-ec2e-99de-cba733fabc36}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{7d29454c-7692-7451-1d76-6f19040d9a47}</Project>
+      <Project>{69e3752f-f11e-c9ca-bebb-08fe4cbeeaa2}</Project>
       <Name>Unity.TextMeshPro</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{96147634-acdb-f103-bb6c-6a6ccdda9bbd}</Project>
+      <Project>{61ec82c0-dad7-9a43-f877-083d274b5487}</Project>
       <Name>UnityEditor.UI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

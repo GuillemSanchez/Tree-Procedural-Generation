@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8b9d3ebe-b18c-a650-c8ba-9b915f7b1919}</ProjectGuid>
+    <ProjectGuid>{49102cd0-6f27-6682-014c-60184144e048}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.VSCode.Editor</AssemblyName>
@@ -239,11 +239,8 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-        <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
-        <HintPath>C:/Users/root/Documents/GitHub/Tree Procedural Generation/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+        <HintPath>C:/Users/root/Documents/GitHub/Tree-Procedural-Generation/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -593,22 +590,22 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{96147634-acdb-f103-bb6c-6a6ccdda9bbd}</Project>
+      <Project>{61ec82c0-dad7-9a43-f877-083d274b5487}</Project>
       <Name>UnityEditor.UI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{de7a4715-c3bf-76b4-0361-ebd33bd0b786}</Project>
+      <Project>{c191a34e-7e7b-3ae9-79f4-f4eee0e02818}</Project>
       <Name>UnityEngine.UI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{897fe64a-209a-20e1-e967-4fefce31a620}</Project>
+      <Project>{e77cc6c6-e3b2-7230-16b7-f5787e3abaab}</Project>
       <Name>UnityEditor.TestRunner</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{f49ab09b-3562-65b0-6992-ccc4cabc33b9}</Project>
+      <Project>{73dbf63a-e2e0-92fb-cd2a-3e74ae450a55}</Project>
       <Name>UnityEngine.TestRunner</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
