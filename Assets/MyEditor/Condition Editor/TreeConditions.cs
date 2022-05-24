@@ -11,12 +11,16 @@ public class TreeConditions : ScriptableObject
 
     public float optimHeight;
     public float unOptimHeight;
+    public float standartHeight;
 
     public float optimRadius;
     public float unOptimRadius;
+    public float standartRadius;
+
 
     public float optimLeafSize;
     public float unOptimLeafSize;
+    public float standartLeafSize;
 
     public Color optimWoodColor;
     public Color unOptimWoodColor;

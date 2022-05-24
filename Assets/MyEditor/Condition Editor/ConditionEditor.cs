@@ -10,6 +10,11 @@ public class ConditionEditor : EditorWindow
     private GameObject myTree;
     public TreeConditions myTreeConditions;
 
+    public float test1 = 0;
+    public float test2 = 0;
+    public float test3 = 0;
+    private bool conditionInflu = false;
+
     [MenuItem("Tree Procedural Generation/Condition Editor")]
     private static void ShowWindow()
     {
@@ -25,6 +30,8 @@ public class ConditionEditor : EditorWindow
         {
             EditConditionTreeVars();
             Corrections();
+            if (conditionInflu)
+                myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
         }
     }
 
@@ -64,6 +71,7 @@ public class ConditionEditor : EditorWindow
             }
 
             myTreeConditions = myTree.GetComponent<ConditionCore>().myConditions;
+            myTree.GetComponent<ConditionCore>().GetInfo();
         }
 
     }
@@ -73,21 +81,24 @@ public class ConditionEditor : EditorWindow
         GUILayout.Space(20);
         GUILayout.Label("TREE CONDITIONS:", EditorStyles.boldLabel);
         GUILayout.Space(10);
-        GUILayout.Label("Trunk and branches");
+        GUILayout.Label("Trunk and branches", EditorStyles.boldLabel);
         GUILayout.Space(5);
         myTreeConditions.optimHeight = EditorGUILayout.Slider(new GUIContent("Optimum Height:", "The peak height that the tree gets in the best conditions"), myTreeConditions.optimHeight, 0.001f, 50.0f);
         myTreeConditions.unOptimHeight = EditorGUILayout.Slider(new GUIContent("Apalling Height:", "The worst height that the tree gets in the worst conditions"), myTreeConditions.unOptimHeight, 0.001f, 50.0f);
+        myTreeConditions.standartHeight = EditorGUILayout.Slider(new GUIContent("Standart Height:", "The standart height of the tree"), myTreeConditions.standartHeight, 0.001f, 50.0f);
         GUILayout.Space(5);
         myTreeConditions.optimRadius = EditorGUILayout.Slider(new GUIContent("Optimum Radius:", "The peak radius that the tree gets in the best conditions"), myTreeConditions.optimRadius, 0.001f, 5.0f);
         myTreeConditions.unOptimRadius = EditorGUILayout.Slider(new GUIContent("Apalling Radius:", "The worst radius that the tree gets in the worst conditions"), myTreeConditions.unOptimRadius, 0.001f, 5.0f);
+        myTreeConditions.standartRadius = EditorGUILayout.Slider(new GUIContent("Standart Radius:", "The standart radius of the tree"), myTreeConditions.standartRadius, 0.001f, 5.0f);
         GUILayout.Space(5);
         myTreeConditions.optimWoodColor = EditorGUILayout.ColorField(new GUIContent("Optimum wood color:", "In the perfect conditions which tonality is the color of the wood?"), myTreeConditions.optimWoodColor);
         myTreeConditions.unOptimWoodColor = EditorGUILayout.ColorField(new GUIContent("Apalling wood color:", "In the worst conditions which tonality is the color of the wood?"), myTreeConditions.unOptimWoodColor);
         GUILayout.Space(10);
-        GUILayout.Label("Leafs");
+        GUILayout.Label("Leafs", EditorStyles.boldLabel);
         GUILayout.Space(5);
         myTreeConditions.optimLeafSize = EditorGUILayout.Slider(new GUIContent("Optimum Leaf Size:", "The peak Leaf Size that the tree gets in the best conditions"), myTreeConditions.optimLeafSize, 0.001f, 10.0f);
         myTreeConditions.unOptimLeafSize = EditorGUILayout.Slider(new GUIContent("Apalling Leaf Size:", "The worst Leaf Size that the tree gets in the worst conditions"), myTreeConditions.unOptimLeafSize, 0.001f, 10.0f);
+        myTreeConditions.standartLeafSize = EditorGUILayout.Slider(new GUIContent("Standart Leaf Size:", "The standart Leaf Size of the tree"), myTreeConditions.standartLeafSize, 0.001f, 10.0f);
         GUILayout.Space(5);
         // Actual leafs?
         myTreeConditions.optimNumberLeafs = EditorGUILayout.IntField(new GUIContent("Optimum Number of Leafs:", "The peak Number of Leafs that the tree gets in the best conditions"), myTreeConditions.optimNumberLeafs);
@@ -95,6 +106,12 @@ public class ConditionEditor : EditorWindow
         GUILayout.Space(5);
         myTreeConditions.optimLeafColor = EditorGUILayout.ColorField(new GUIContent("Optimum leaf color:", "In the perfect conditions which tonality is the color of the leaf?"), myTreeConditions.optimLeafColor);
         myTreeConditions.unOptimLeafColor = EditorGUILayout.ColorField(new GUIContent("Apalling leaf color:", "In the worst conditions which tonality is the color of the leaf?"), myTreeConditions.unOptimLeafColor);
+        GUILayout.Space(5);
+        conditionInflu = EditorGUILayout.Toggle(new GUIContent("Condition Modifying?", "Does the previus vars affects to the tree?"), conditionInflu);
+        test1 = EditorGUILayout.FloatField("height",test1);
+        test2 = EditorGUILayout.FloatField("radius",test2);
+        test3 = EditorGUILayout.FloatField("Size",test3);
+
 
     }
 
@@ -106,5 +123,8 @@ public class ConditionEditor : EditorWindow
         if (myTreeConditions.unOptimNumberLeafs < 0)
             myTreeConditions.unOptimNumberLeafs = 0;
     }
+
+
+
 }
 
