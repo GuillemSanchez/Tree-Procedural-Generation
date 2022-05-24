@@ -9,6 +9,8 @@ public class ConditionCore : MonoBehaviour
     private Tree myTree;
     private TreeData myData;
 
+    private TreeData initalData;
+
 
     public void ModifyingHeight(float final)
     {
@@ -28,16 +30,55 @@ public class ConditionCore : MonoBehaviour
 
         List<TreeGroupBranch> toEdit = GetMainTrunks();
 
+
         for (int i = 0; i < toEdit.Count; i++)
         {
+            List<TreeGroupBranch> myChilds = GetMyBranches(toEdit[i].uniqueID);
+            for (int j = 0; j < myChilds.Count; j++)
+            {
+                if (heightValue != ((toEdit[i].height.y + toEdit[i].height.x) / 2))
+                {
+                    myChilds[j].height.x *= ((heightValue / ((toEdit[i].height.y + toEdit[i].height.x) / 2)) - 1);
+                    myChilds[j].height.y *= ((heightValue / ((toEdit[i].height.y + toEdit[i].height.x) / 2)) - 1);
+                }
+            }
             toEdit[i].height = new Vector2(heightValue * 0.9f, heightValue * 1.1f);
         }
+
+
         Preview();
     }
     public void ModifyingRadius(float final)
     {
+        float radiusValue = 0;
+        if (final > 0)
+        {
+            radiusValue = ((myConditions.optimRadius - myConditions.standartRadius) * final) + myConditions.standartRadius;
+        }
+        if (final == 0)
+        {
+            radiusValue = myConditions.standartRadius;
+        }
+        if (final < 0)
+        {
+            radiusValue = myConditions.standartRadius - ((myConditions.standartRadius - myConditions.unOptimRadius) * Mathf.Abs(final));
+        }
 
+        List<TreeGroupBranch> toEdit = GetMainTrunks();
+
+        for (int i = 0; i < toEdit.Count; i++)
+        {
+            List<TreeGroupBranch> myChilds = GetMyBranches(toEdit[i].uniqueID);
+            for (int j = 0; j < myChilds.Count; j++)
+            {
+                if (radiusValue != toEdit[i].radius)
+                    myChilds[j].radius *= ((radiusValue / (toEdit[i].radius)) - 1);
+            }
+            toEdit[i].radius = radiusValue;
+        }
+        Preview();
     }
+
     public void ModifyingLeafSize(float final)
     {
 
@@ -47,6 +88,7 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
+        initalData = myTree.data as TreeData;
     }
 
     private List<TreeGroupBranch> GetMainTrunks()
@@ -62,6 +104,17 @@ public class ConditionCore : MonoBehaviour
         return final;
     }
 
+    private List<TreeGroupBranch> GetMyBranches(int myID)
+    {
+        List<TreeGroupBranch> final = new List<TreeGroupBranch>();
+        for (int i = 0; i < myData.branchGroups.Length; i++)
+        {
+            if (myData.branchGroups[i].parentGroupID == myID)
+                final.Add(myData.branchGroups[i]);
+        }
+
+        return final;
+    }
     private void AssignMaterials(Renderer renderer, Material[] materials)
     {
         if (renderer != null)
