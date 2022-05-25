@@ -116,7 +116,7 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
-        initalData = myTree.data as TreeData;
+        initalData = TreeData.Instantiate(myData);
     }
 
     private List<TreeGroupBranch> GetMainTrunks()
