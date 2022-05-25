@@ -35,6 +35,7 @@ public class ConditionEditor : EditorWindow
             {
                 myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
                 myTree.GetComponent<ConditionCore>().ModifyingRadius(test2);
+                myTree.GetComponent<ConditionCore>().ModifyingGrowth();
             }
         }
     }
@@ -113,9 +114,9 @@ public class ConditionEditor : EditorWindow
         myTreeConditions.unOptimLeafColor = EditorGUILayout.ColorField(new GUIContent("Apalling leaf color:", "In the worst conditions which tonality is the color of the leaf?"), myTreeConditions.unOptimLeafColor);
         GUILayout.Space(5);
         conditionInflu = EditorGUILayout.Toggle(new GUIContent("Condition Modifying?", "Does the previus vars affects to the tree?"), conditionInflu);
-        test1 = EditorGUILayout.FloatField("height", test1);
-        test2 = EditorGUILayout.FloatField("radius", test2);
-        test3 = EditorGUILayout.FloatField("Size", test3);
+        test1 = EditorGUILayout.Slider("height", test1, -1f,1f);
+        test2 = EditorGUILayout.Slider("radius", test2, -1f,1f);
+        test3 = EditorGUILayout.Slider("Size", test3, -1f,1f);
 
         //Boton de safe data. Donde se guarda el resultado final del tree 
 
