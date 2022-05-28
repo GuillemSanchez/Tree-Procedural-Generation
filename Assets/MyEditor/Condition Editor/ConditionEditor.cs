@@ -13,6 +13,8 @@ public class ConditionEditor : EditorWindow
     public float test1 = 0;
     public float test2 = 0;
     public float test3 = 0;
+    public float testcolor1 = 0;
+    public float testcolor2 = 0;
     private bool conditionInflu = false;
 
     [MenuItem("Tree Procedural Generation/Condition Editor")]
@@ -36,7 +38,9 @@ public class ConditionEditor : EditorWindow
                 //myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
                 //myTree.GetComponent<ConditionCore>().ModifyingRadius(test2);
                 //myTree.GetComponent<ConditionCore>().ModifyingGrowth();
-                myTree.GetComponent<ConditionCore>().ModifyingLeafSize(test3);
+                //myTree.GetComponent<ConditionCore>().ModifyingLeafSize(test3);
+                myTree.GetComponent<ConditionCore>().ModifyingWoodColor(testcolor1);
+                myTree.GetComponent<ConditionCore>().ModifyingLeafColor(testcolor2);
             }
         }
     }
@@ -100,6 +104,7 @@ public class ConditionEditor : EditorWindow
         GUILayout.Space(5);
         myTreeConditions.optimWoodColor = EditorGUILayout.ColorField(new GUIContent("Optimum wood color:", "In the perfect conditions which tonality is the color of the wood?"), myTreeConditions.optimWoodColor);
         myTreeConditions.unOptimWoodColor = EditorGUILayout.ColorField(new GUIContent("Apalling wood color:", "In the worst conditions which tonality is the color of the wood?"), myTreeConditions.unOptimWoodColor);
+        Color helper = EditorGUILayout.ColorField(new GUIContent("Final Wood Color:", "This is the color that the wood of tree will get if saved, you can't edit it."), myTreeConditions.finalWColor);
         GUILayout.Space(10);
         GUILayout.Label("Leafs", EditorStyles.boldLabel);
         GUILayout.Space(5);
@@ -113,11 +118,19 @@ public class ConditionEditor : EditorWindow
         GUILayout.Space(5);
         myTreeConditions.optimLeafColor = EditorGUILayout.ColorField(new GUIContent("Optimum leaf color:", "In the perfect conditions which tonality is the color of the leaf?"), myTreeConditions.optimLeafColor);
         myTreeConditions.unOptimLeafColor = EditorGUILayout.ColorField(new GUIContent("Apalling leaf color:", "In the worst conditions which tonality is the color of the leaf?"), myTreeConditions.unOptimLeafColor);
+        Color helper1 = EditorGUILayout.ColorField(new GUIContent("Final Leaf Color:", "This is the color that the leafs of tree will get if saved, you can't edit it."), myTreeConditions.finalLColor);
         GUILayout.Space(5);
         conditionInflu = EditorGUILayout.Toggle(new GUIContent("Condition Modifying?", "Does the previus vars affects to the tree?"), conditionInflu);
         test1 = EditorGUILayout.Slider("height", test1, -1f,1f);
         test2 = EditorGUILayout.Slider("radius", test2, -1f,1f);
         test3 = EditorGUILayout.Slider("Size", test3, -1f,1f);
+        testcolor1 = EditorGUILayout.Slider("Wood", testcolor1, -1f,1f);
+        testcolor2 = EditorGUILayout.Slider("Leaf", testcolor2, -1f,1f);
+
+        if (GUILayout.Button("Save"))
+            myTree.GetComponent<ConditionCore>().Update();
+
+
 
         //Boton de safe data. Donde se guarda el resultado final del tree 
 

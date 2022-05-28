@@ -24,9 +24,11 @@ public class TreeConditions : ScriptableObject
 
     public Color optimWoodColor;
     public Color unOptimWoodColor;
+    public Color finalWColor;
 
     public Color optimLeafColor;
     public Color unOptimLeafColor;
+    public Color finalLColor;
 
     public int optimNumberLeafs;
     public int unOptimNumberLeafs;

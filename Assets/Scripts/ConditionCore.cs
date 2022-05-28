@@ -68,6 +68,43 @@ public class ConditionCore : MonoBehaviour
         Preview();
     }
 
+    public void ModifyingWoodColor(float final)
+    {
+        Color colorValue = new Color();
+
+        colorValue.a = ChangeRange(myConditions.unOptimWoodColor.a, myConditions.optimWoodColor.a, final);
+        colorValue.r = ChangeRange(myConditions.unOptimWoodColor.r, myConditions.optimWoodColor.r, final);
+        colorValue.g = ChangeRange(myConditions.unOptimWoodColor.g, myConditions.optimWoodColor.g, final);
+        colorValue.b = ChangeRange(myConditions.unOptimWoodColor.b, myConditions.optimWoodColor.b, final);
+
+        myConditions.finalWColor = colorValue;
+        for (int i = 0; i < myData.branchGroups.Length; i++)
+        {
+            myData.branchGroups[i].materialBranch.color = colorValue;
+        }
+    }
+
+    public void ModifyingLeafColor(float final)
+    {
+        Color colorValue = new Color();
+
+        colorValue.a = ChangeRange(myConditions.unOptimLeafColor.a, myConditions.optimLeafColor.a, final);
+        colorValue.r = ChangeRange(myConditions.unOptimLeafColor.r, myConditions.optimLeafColor.r, final);
+        colorValue.g = ChangeRange(myConditions.unOptimLeafColor.g, myConditions.optimLeafColor.g, final);
+        colorValue.b = ChangeRange(myConditions.unOptimLeafColor.b, myConditions.optimLeafColor.b, final);
+
+        myConditions.finalLColor = colorValue;
+        for (int i = 0; i < myData.leafGroups.Length; i++)
+        {
+            myData.leafGroups[i].materialLeaf.color = colorValue;
+        }
+        for (int i = 0; i < myData.branchGroups.Length; i++)
+        {
+            if (myData.branchGroups[i].geometryMode == TreeGroupBranch.GeometryMode.BranchFrond)
+                myData.branchGroups[i].materialFrond.color = colorValue;
+        }
+    }
+
     public void ModifyingLeafSize(float final)
     {
 
@@ -179,6 +216,12 @@ public class ConditionCore : MonoBehaviour
         return final;
     }
 
+
+    private float ChangeRange(float xi, float xf, float v)
+    {
+        return ((xf - xi) / 2) * (v + 1) + xi;
+    }
+
     private void AssignMaterials(Renderer renderer, Material[] materials)
     {
         if (renderer != null)
@@ -196,5 +239,13 @@ public class ConditionCore : MonoBehaviour
         myData.PreviewMesh(myTree.transform.worldToLocalMatrix, out materials);
         AssignMaterials(myTree.GetComponent<Renderer>(), materials);
     }
+
+    public void Update()
+    {
+        Material[] materials;
+        myData.UpdateMesh(myTree.transform.worldToLocalMatrix, out materials);
+        AssignMaterials(myTree.GetComponent<Renderer>(), materials);
+    }
+
 
 }
