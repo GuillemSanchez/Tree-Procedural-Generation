@@ -14,6 +14,8 @@ public class ConditionCore : MonoBehaviour
     private float RadiusValue;
     private float HeightValue;
 
+    private int TotalLeafs;
+
 
     public void ModifyingHeight(float final)
     {
@@ -105,6 +107,41 @@ public class ConditionCore : MonoBehaviour
         }
     }
 
+    public void ModifyingFrequencyLeafs(float final)
+    {
+        int leafsValue = (int)ChangeRange(myConditions.unOptimNumberLeafs, myConditions.optimNumberLeafs, final);
+
+        for (int i = 0; i < myData.leafGroups.Length; i++)
+        {
+            for (int j = 0; j < initalData.leafGroups.Length; j++)
+            {
+                if (myData.leafGroups[i].uniqueID == initalData.leafGroups[j].uniqueID)
+                {
+                    myData.leafGroups[i].distributionFrequency = leafsValue * initalData.leafGroups[j].distributionFrequency / TotalLeafs;
+                    myData.UpdateFrequency(myData.leafGroups[i].uniqueID);
+                }
+            }
+        }
+
+        for (int i = 0; i < myData.branchGroups.Length; i++)
+        {
+            if (myData.branchGroups[i].geometryMode == TreeGroupBranch.GeometryMode.BranchFrond)
+            {
+                for (int j = 0; j < initalData.branchGroups.Length; j++)
+                {
+                    if (myData.branchGroups[i].uniqueID == initalData.branchGroups[j].uniqueID)
+                    {
+                        myData.branchGroups[i].distributionFrequency = leafsValue * initalData.branchGroups[j].distributionFrequency / TotalLeafs;
+                        myData.UpdateFrequency(myData.branchGroups[i].uniqueID);
+                    }
+                }
+            }
+
+        }
+        Preview();
+    }
+
+
     public void ModifyingLeafSize(float final)
     {
 
@@ -168,6 +205,26 @@ public class ConditionCore : MonoBehaviour
                 }
             }
         }
+    }
+
+
+
+    public int getOriginalLeafs()
+    {
+        int totalLeafs = 0;
+
+        for (int i = 0; i < initalData.leafGroups.Length; i++)
+        {
+            totalLeafs += initalData.leafGroups[i].nodeIDs.Length;
+        }
+
+        for (int i = 0; i < initalData.branchGroups.Length; i++)
+        {
+            if (initalData.branchGroups[i].geometryMode == TreeGroupBranch.GeometryMode.BranchFrond)
+                totalLeafs += initalData.branchGroups[i].nodeIDs.Length;
+        }
+        TotalLeafs = totalLeafs;
+        return totalLeafs;
     }
 
 

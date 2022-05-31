@@ -17,6 +17,8 @@ public class ConditionEditor : EditorWindow
     public float testcolor2 = 0;
     private bool conditionInflu = false;
 
+    public int numberOfOriginalLeafs = 0;
+
     [MenuItem("Tree Procedural Generation/Condition Editor")]
     private static void ShowWindow()
     {
@@ -31,16 +33,19 @@ public class ConditionEditor : EditorWindow
         if (myTree != null)
         {
             bool vChange = GUI.changed;
+            numberOfOriginalLeafs = myTree.GetComponent<ConditionCore>().getOriginalLeafs();
             EditConditionTreeVars();
             Corrections();
             if (conditionInflu && vChange != GUI.changed)
             {
-                //myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
-                //myTree.GetComponent<ConditionCore>().ModifyingRadius(test2);
-                //myTree.GetComponent<ConditionCore>().ModifyingGrowth();
-                //myTree.GetComponent<ConditionCore>().ModifyingLeafSize(test3);
+                /*myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
+                myTree.GetComponent<ConditionCore>().ModifyingRadius(test2);
+                myTree.GetComponent<ConditionCore>().ModifyingGrowth();
+                myTree.GetComponent<ConditionCore>().ModifyingLeafSize(test3);
                 myTree.GetComponent<ConditionCore>().ModifyingWoodColor(testcolor1);
-                myTree.GetComponent<ConditionCore>().ModifyingLeafColor(testcolor2);
+                myTree.GetComponent<ConditionCore>().ModifyingLeafColor(testcolor2);*/
+                myTree.GetComponent<ConditionCore>().ModifyingFrequencyLeafs(test1);
+                
             }
         }
     }
@@ -112,7 +117,7 @@ public class ConditionEditor : EditorWindow
         myTreeConditions.unOptimLeafSize = EditorGUILayout.Slider(new GUIContent("Apalling Leaf Size (Multiple):", "This Number is a multiplier, the standart leaf size is the original size, and this will multiply the size of the original"), myTreeConditions.unOptimLeafSize, 0.001f, 2f);
         //myTreeConditions.standartLeafSize = EditorGUILayout.Slider(new GUIContent("Standart Leaf Size:", "The standart Leaf Size of the tree"), myTreeConditions.standartLeafSize, 0.001f, 2f);
         GUILayout.Space(5);
-        // Actual leafs?
+        GUILayout.Label(new GUIContent("Original Number: " + numberOfOriginalLeafs, "The number of leafs that had the original tree, its recomended to put more leafs than this number."));
         myTreeConditions.optimNumberLeafs = EditorGUILayout.IntField(new GUIContent("Optimum Number of Leafs:", "The peak Number of Leafs that the tree gets in the best conditions"), myTreeConditions.optimNumberLeafs);
         myTreeConditions.unOptimNumberLeafs = EditorGUILayout.IntField(new GUIContent("Apalling Number of Leafs:", "The worst Number of Leafs that the tree gets in the worst conditions"), myTreeConditions.unOptimNumberLeafs);
         GUILayout.Space(5);
