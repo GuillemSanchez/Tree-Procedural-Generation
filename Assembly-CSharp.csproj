@@ -37,9 +37,11 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\MyEditor\Generate Editor\BasicMainTrunk.cs" />
+     <Compile Include="Assets\MyEditor\Condition Editor\TemperatureTool.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicLeafs.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\TreeConditions.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicTreeGenerator.cs" />
+     <Compile Include="Assets\MyEditor\Condition Editor\ConditionTool.cs" />
      <Compile Include="Assets\Scripts\ConditionCore.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicBranches.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\ConditionEditor.cs" />
