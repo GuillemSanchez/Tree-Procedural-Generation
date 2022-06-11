@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class TemperatureTool : ConditionTool
+public class WindTool : ConditionTool
 {
     bool advancedBool = false;
     float optimValue_;
@@ -11,10 +11,10 @@ public class TemperatureTool : ConditionTool
     public void ShowTool()
     {
         NotNull();
-        GUILayout.Label("Temperature:", EditorStyles.boldLabel);
+        GUILayout.Label("Wind:", EditorStyles.boldLabel);
         GUILayout.Space(5);
-        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Temperature (C°)", "The optimum temperature of the tree where it grows the best, it works for any type of grades"), optimValue);
-        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Temp (C°)", "How adaptable is the range of the tree to the environment temperature, it works for any type of grades."), adaptabilityRange);
+        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Wind (m/s)", "The optimum wind for the tree to grow at the best."), optimValue);
+        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Wind (m/s)", "How adaptable is the range of the tree to the environment winds."), adaptabilityRange);
         GUILayout.Space(5);
         GUILayout.Label("Adaptability Curve:", EditorStyles.boldLabel);
         GUILayout.Space(5);
@@ -70,15 +70,15 @@ public class TemperatureTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = -30;
-            curveEnd = 80;
+            curveBeggining = 0;
+            curveEnd = 30;
 
-            heightModifier = 0.2f;
-            radiusModifier = 0.2f;
+            heightModifier = 0.9f;
+            radiusModifier = 0.5f;
             leafSizeModifier = 0.8f;
             numberOfLeafsModifier = 0.8f;
-            leafColorModifier = 0.8f;
-            woodColorModifier = 0.1f;
+            leafColorModifier = 0.0f;
+            woodColorModifier = 0.0f;
             // Designer Choices -----------------------------
         }
     }

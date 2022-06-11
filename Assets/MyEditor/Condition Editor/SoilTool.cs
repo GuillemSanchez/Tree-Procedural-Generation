@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class TemperatureTool : ConditionTool
+public class SoilTool : ConditionTool
 {
     bool advancedBool = false;
     float optimValue_;
@@ -11,10 +11,10 @@ public class TemperatureTool : ConditionTool
     public void ShowTool()
     {
         NotNull();
-        GUILayout.Label("Temperature:", EditorStyles.boldLabel);
+        GUILayout.Label("Soil Richness:", EditorStyles.boldLabel);
         GUILayout.Space(5);
-        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Temperature (C°)", "The optimum temperature of the tree where it grows the best, it works for any type of grades"), optimValue);
-        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Temp (C°)", "How adaptable is the range of the tree to the environment temperature, it works for any type of grades."), adaptabilityRange);
+        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Soil:", "The optimum soil richness of the tree where it grows the best."), optimValue);
+        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Soil:", "How adaptable is the range of the tree to the soil where it is growing."), adaptabilityRange);
         GUILayout.Space(5);
         GUILayout.Label("Adaptability Curve:", EditorStyles.boldLabel);
         GUILayout.Space(5);
@@ -70,7 +70,7 @@ public class TemperatureTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = -30;
+            curveBeggining = 0;
             curveEnd = 80;
 
             heightModifier = 0.2f;
@@ -82,6 +82,5 @@ public class TemperatureTool : ConditionTool
             // Designer Choices -----------------------------
         }
     }
-
 
 }

@@ -104,6 +104,18 @@ public class ConditionEditor : EditorWindow
             {
                 myTreeConditions.myTemp = new TemperatureTool();
             }
+            if (myTreeConditions.myWater == null)
+            {
+                myTreeConditions.myWater = new WaterTool();
+            }
+            if (myTreeConditions.myWind == null)
+            {
+                myTreeConditions.myWind = new WindTool();
+            }
+            if (myTreeConditions.mySoil == null)
+            {
+                myTreeConditions.mySoil = new SoilTool();
+            }
 
 
 
@@ -248,17 +260,17 @@ public class ConditionEditor : EditorWindow
 
     private void ShowWaterConditions()
     {
-
+        myTreeConditions.myWater.ShowTool();
     }
 
     private void ShowSoilConditions()
     {
-
+        myTreeConditions.mySoil.ShowTool();
     }
 
     private void ShowWindConditions()
     {
-
+        myTreeConditions.myWind.ShowTool();
     }
 
 

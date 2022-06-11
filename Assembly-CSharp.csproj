@@ -45,6 +45,9 @@
      <Compile Include="Assets\Scripts\ConditionCore.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicBranches.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\ConditionEditor.cs" />
+     <Compile Include="Assets\MyEditor\Condition Editor\WaterTool.cs" />
+     <Compile Include="Assets\MyEditor\Condition Editor\SoilTool.cs" />
+     <Compile Include="Assets\MyEditor\Condition Editor\WindTool.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

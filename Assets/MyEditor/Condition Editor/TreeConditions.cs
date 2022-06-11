@@ -34,6 +34,10 @@ public class TreeConditions : ScriptableObject
     public int unOptimNumberLeafs;
 
     public TemperatureTool myTemp;
+    public WaterTool myWater;
+    public WindTool myWind;
+    public SoilTool mySoil;
+
 
 
     // Does it bend like a curve or like and angle?
