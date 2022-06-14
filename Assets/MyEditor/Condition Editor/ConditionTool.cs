@@ -25,4 +25,13 @@ public class ConditionTool : EditorWindow
     public float curveEnd;
     // Advanced settings ---------------------------------
 
+
+    public float GetCurveValue(float value)
+    {
+        float a = rangeCurve.Evaluate(value);
+        return a;
+    }
+
+
+
 }

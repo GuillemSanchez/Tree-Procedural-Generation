@@ -194,16 +194,15 @@ public class ConditionEditor : EditorWindow
             ShowWindConditions();
 
 
-        /*test1 = EditorGUILayout.Slider("height", test1, -1f, 1f);
-        test2 = EditorGUILayout.Slider("radius", test2, -1f, 1f);
-        test3 = EditorGUILayout.Slider("Size", test3, -1f, 1f);
-        testcolor1 = EditorGUILayout.Slider("Wood", testcolor1, -1f, 1f);
-        testcolor2 = EditorGUILayout.Slider("Leaf", testcolor2, -1f, 1f);
-        */
+        myTreeConditions.temp = EditorGUILayout.FloatField("temp", myTreeConditions.temp);
+        myTreeConditions.water = EditorGUILayout.FloatField("water", myTreeConditions.water);
+        myTreeConditions.soil = EditorGUILayout.FloatField("soil", myTreeConditions.soil);
+        myTreeConditions.wind = EditorGUILayout.FloatField("wind", myTreeConditions.wind);
+
         if (GUILayout.Button("Save"))
-            myTree.GetComponent<ConditionCore>().Update();
+            myTree.GetComponent<ConditionCore>().FUpdate();
 
-
+        myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
 
         //Boton de safe data. Donde se guarda el resultado final del tree 
 

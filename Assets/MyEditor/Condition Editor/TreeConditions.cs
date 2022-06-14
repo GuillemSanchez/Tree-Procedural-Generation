@@ -39,9 +39,10 @@ public class TreeConditions : ScriptableObject
     public SoilTool mySoil;
 
 
-
-    // Does it bend like a curve or like and angle?
-
+    public float temp;
+    public float water;
+    public float wind;
+    public float soil;
 
 
 }

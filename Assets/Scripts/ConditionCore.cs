@@ -16,6 +16,22 @@ public class ConditionCore : MonoBehaviour
 
     private int TotalLeafs;
 
+    List<float> heightArr;
+    List<float> radiusArr;
+    List<float> lSizeArr;
+    List<float> lFrequencyArr;
+    List<float> lColorArr;
+    List<float> wColorArr;
+
+    private float lastHe = 0;
+    private float lastRa = 0;
+    private float lastLS = 0;
+    private float lastLF = 0;
+    private float lastLC = 0;
+    private float lastWC = 0;
+
+
+
 
     public void ModifyingHeight(float final)
     {
@@ -140,7 +156,6 @@ public class ConditionCore : MonoBehaviour
         }
         Preview();
     }
-
 
     public void ModifyingLeafSize(float final)
     {
@@ -297,11 +312,229 @@ public class ConditionCore : MonoBehaviour
         AssignMaterials(myTree.GetComponent<Renderer>(), materials);
     }
 
-    public void Update()
+    public void FUpdate()
     {
         Material[] materials;
         myData.UpdateMesh(myTree.transform.worldToLocalMatrix, out materials);
         AssignMaterials(myTree.GetComponent<Renderer>(), materials);
+    }
+
+
+
+    public void GettingReadyToUpdate()
+    {
+        heightArr.Clear();
+        radiusArr.Clear();
+        lSizeArr.Clear();
+        lColorArr.Clear();
+        lFrequencyArr.Clear();
+        wColorArr.Clear();
+
+        if (myConditions.myTemp != null)
+        {
+            if (myConditions.myTemp.adaptabilityRange != 0)
+            {
+                float val = myConditions.myTemp.GetCurveValue(myConditions.temp);
+                heightArr.Add(val);
+                heightArr.Add(myConditions.myTemp.heightModifier);
+
+                radiusArr.Add(val);
+                radiusArr.Add(myConditions.myTemp.radiusModifier);
+
+                lSizeArr.Add(val);
+                lSizeArr.Add(myConditions.myTemp.leafSizeModifier);
+
+                lColorArr.Add(val);
+                lColorArr.Add(myConditions.myTemp.leafColorModifier);
+
+                lFrequencyArr.Add(val);
+                lFrequencyArr.Add(myConditions.myTemp.numberOfLeafsModifier);
+
+                wColorArr.Add(val);
+                wColorArr.Add(myConditions.myTemp.woodColorModifier);
+
+            }
+        }
+        if (myConditions.myWater != null)
+        {
+            if (myConditions.myWater.adaptabilityRange != 0)
+            {
+                float val = myConditions.myWater.GetCurveValue(myConditions.water);
+
+                heightArr.Add(val);
+                heightArr.Add(myConditions.myWater.heightModifier);
+
+                radiusArr.Add(val);
+                radiusArr.Add(myConditions.myWater.radiusModifier);
+
+                lSizeArr.Add(val);
+                lSizeArr.Add(myConditions.myWater.leafSizeModifier);
+
+                lColorArr.Add(val);
+                lColorArr.Add(myConditions.myWater.leafColorModifier);
+
+                lFrequencyArr.Add(val);
+                lFrequencyArr.Add(myConditions.myWater.numberOfLeafsModifier);
+
+                wColorArr.Add(val);
+                wColorArr.Add(myConditions.myWater.woodColorModifier);
+
+            }
+        }
+        if (myConditions.mySoil != null)
+        {
+            if (myConditions.mySoil.adaptabilityRange != 0)
+            {
+                float val = myConditions.mySoil.GetCurveValue(myConditions.soil);
+
+                heightArr.Add(val);
+                heightArr.Add(myConditions.mySoil.heightModifier);
+
+                radiusArr.Add(val);
+                radiusArr.Add(myConditions.mySoil.radiusModifier);
+
+                lSizeArr.Add(val);
+                lSizeArr.Add(myConditions.mySoil.leafSizeModifier);
+
+                lColorArr.Add(val);
+                lColorArr.Add(myConditions.mySoil.leafColorModifier);
+
+                lFrequencyArr.Add(val);
+                lFrequencyArr.Add(myConditions.mySoil.numberOfLeafsModifier);
+
+                wColorArr.Add(val);
+                wColorArr.Add(myConditions.mySoil.woodColorModifier);
+
+            }
+        }
+        if (myConditions.myWind != null)
+        {
+            if (myConditions.myWind.adaptabilityRange != 0)
+            {
+                float val = myConditions.myWind.GetCurveValue(myConditions.wind);
+
+                heightArr.Add(val);
+                heightArr.Add(myConditions.myWind.heightModifier);
+
+                radiusArr.Add(val);
+                radiusArr.Add(myConditions.myWind.radiusModifier);
+
+                lSizeArr.Add(val);
+                lSizeArr.Add(myConditions.myWind.leafSizeModifier);
+
+                lColorArr.Add(val);
+                lColorArr.Add(myConditions.myWind.leafColorModifier);
+
+                lFrequencyArr.Add(val);
+                lFrequencyArr.Add(myConditions.myWind.numberOfLeafsModifier);
+
+                wColorArr.Add(val);
+                wColorArr.Add(myConditions.myWind.woodColorModifier);
+            }
+        }
+        float toHeight = 0;
+        float valHeight = 0;
+        float toRadius = 0;
+        float valRadius = 0;
+        float tolSize = 0;
+        float vallSize = 0;
+        float toFleaf = 0;
+        float valFleaf = 0;
+        float toLcolor = 0;
+        float valLcolor = 0;
+        float toWcolor = 0;
+        float valWcolor = 0;
+
+        if (heightArr.Count > 0)
+        {
+            for (int i = 0; i < heightArr.Count; i += 2)
+            {
+                toHeight += (heightArr[i] * heightArr[i + 1]);
+                valHeight += heightArr[i + 1];
+            }
+            toHeight /= valHeight;
+            Debug.Log(toHeight);
+        }
+
+
+        if (radiusArr.Count > 0)
+        {
+            for (int i = 0; i < radiusArr.Count; i += 2)
+            {
+                toRadius += (radiusArr[i] * radiusArr[i + 1]);
+                valRadius += radiusArr[i + 1];
+            }
+            toRadius /= valRadius;
+            Debug.Log(toRadius);
+        }
+
+        if (lSizeArr.Count > 0)
+        {
+            for (int i = 0; i < lSizeArr.Count; i += 2)
+            {
+                tolSize += (lSizeArr[i] * lSizeArr[i + 1]);
+                vallSize += lSizeArr[i + 1];
+            }
+            tolSize /= vallSize;
+            Debug.Log(tolSize);
+        }
+
+
+        if (lFrequencyArr.Count > 0)
+        {
+            for (int i = 0; i < lFrequencyArr.Count; i += 2)
+            {
+                toFleaf += (lFrequencyArr[i] * lFrequencyArr[i + 1]);
+                valFleaf += lFrequencyArr[i + 1];
+            }
+            toFleaf /= valFleaf;
+            
+        }
+
+
+        if (lColorArr.Count > 0)
+        {
+            for (int i = 0; i < lColorArr.Count; i += 2)
+            {
+                toLcolor += (lColorArr[i] * lColorArr[i + 1]);
+                valLcolor += lColorArr[i + 1];
+            }
+            toLcolor /= valLcolor;
+        }
+
+
+        if (wColorArr.Count > 0)
+        {
+            for (int i = 0; i < wColorArr.Count; i += 2)
+            {
+                toWcolor += (wColorArr[i] * wColorArr[i + 1]);
+                valWcolor += wColorArr[i + 1];
+            }
+            toWcolor /= valWcolor;
+        }
+
+        if (toHeight != lastHe)
+            ModifyingHeight(toHeight);
+        if (toRadius != lastRa)
+            ModifyingRadius(toRadius);
+        if (toRadius != lastRa || toHeight != lastHe)
+            ModifyingGrowth();
+        if (tolSize != lastLS)
+            ModifyingLeafSize(tolSize);
+        if (toFleaf != lastLF)
+            ModifyingFrequencyLeafs(toFleaf);
+        if (toLcolor != lastLC)
+            ModifyingLeafColor(toLcolor);
+        if (toWcolor != lastWC)
+            ModifyingWoodColor(toWcolor);
+
+
+        lastHe = toHeight;
+        lastRa = toRadius;
+        lastLS = tolSize;
+        lastLF = toFleaf;
+        lastLC = toLcolor;
+        lastWC = toWcolor;
     }
 
 
