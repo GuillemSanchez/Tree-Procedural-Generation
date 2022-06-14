@@ -16,12 +16,12 @@ public class ConditionCore : MonoBehaviour
 
     private int TotalLeafs;
 
-    List<float> heightArr;
-    List<float> radiusArr;
-    List<float> lSizeArr;
-    List<float> lFrequencyArr;
-    List<float> lColorArr;
-    List<float> wColorArr;
+    List<float> heightArr = new List<float>();
+    List<float> radiusArr = new List<float>();
+    List<float> lSizeArr = new List<float>();
+    List<float> lFrequencyArr = new List<float>();
+    List<float> lColorArr = new List<float>();
+    List<float> wColorArr = new List<float>();
 
     private float lastHe = 0;
     private float lastRa = 0;
@@ -452,8 +452,11 @@ public class ConditionCore : MonoBehaviour
                 toHeight += (heightArr[i] * heightArr[i + 1]);
                 valHeight += heightArr[i + 1];
             }
-            toHeight /= valHeight;
-            Debug.Log(toHeight);
+            if (valHeight != 0)
+                toHeight /= valHeight;
+
+            Debug.Log("Height: to " + toHeight);
+
         }
 
 
@@ -464,8 +467,9 @@ public class ConditionCore : MonoBehaviour
                 toRadius += (radiusArr[i] * radiusArr[i + 1]);
                 valRadius += radiusArr[i + 1];
             }
-            toRadius /= valRadius;
-            Debug.Log(toRadius);
+            if (valRadius != 0)
+                toRadius /= valRadius;
+
         }
 
         if (lSizeArr.Count > 0)
@@ -475,8 +479,9 @@ public class ConditionCore : MonoBehaviour
                 tolSize += (lSizeArr[i] * lSizeArr[i + 1]);
                 vallSize += lSizeArr[i + 1];
             }
-            tolSize /= vallSize;
-            Debug.Log(tolSize);
+            if (vallSize != 0)
+                tolSize /= vallSize;
+
         }
 
 
@@ -487,8 +492,9 @@ public class ConditionCore : MonoBehaviour
                 toFleaf += (lFrequencyArr[i] * lFrequencyArr[i + 1]);
                 valFleaf += lFrequencyArr[i + 1];
             }
-            toFleaf /= valFleaf;
-            
+            if (valFleaf != 0)
+                toFleaf /= valFleaf;
+
         }
 
 
@@ -499,7 +505,8 @@ public class ConditionCore : MonoBehaviour
                 toLcolor += (lColorArr[i] * lColorArr[i + 1]);
                 valLcolor += lColorArr[i + 1];
             }
-            toLcolor /= valLcolor;
+            if (valLcolor != 0)
+                toLcolor /= valLcolor;
         }
 
 
@@ -510,7 +517,8 @@ public class ConditionCore : MonoBehaviour
                 toWcolor += (wColorArr[i] * wColorArr[i + 1]);
                 valWcolor += wColorArr[i + 1];
             }
-            toWcolor /= valWcolor;
+            if (valWcolor != 0)
+                toWcolor /= valWcolor;
         }
 
         if (toHeight != lastHe)
