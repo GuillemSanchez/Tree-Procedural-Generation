@@ -13,8 +13,8 @@ public class SoilTool : ConditionTool
         NotNull();
         GUILayout.Label("Soil Richness:", EditorStyles.boldLabel);
         GUILayout.Space(5);
-        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Soil:", "The optimum soil richness of the tree where it grows the best."), optimValue);
-        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Soil:", "How adaptable is the range of the tree to the soil where it is growing."), adaptabilityRange);
+        optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Soil quality:", "The optimum soil richness of the tree where it grows the best."), optimValue);
+        adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Soil quality:", "How adaptable is the range of the tree to the soil where it is growing."), adaptabilityRange);
         GUILayout.Space(5);
         GUILayout.Label("Adaptability Curve:", EditorStyles.boldLabel);
         GUILayout.Space(5);

@@ -48,6 +48,9 @@
      <Compile Include="Assets\Scripts\ConditionCore.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicBranches.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\ConditionEditor.cs" />
+     <Compile Include="Assets\MyEditor\Condition Map\ConditionMapEditor.cs" />
+     <Compile Include="Assets\MyEditor\Condition Map\MapConditions.cs" />
+     <Compile Include="Assets\Scripts\MapCore.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
