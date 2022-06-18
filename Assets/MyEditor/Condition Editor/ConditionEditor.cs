@@ -41,6 +41,7 @@ public class ConditionEditor : EditorWindow
     private void OnGUI()
     {
         GetTree();
+        CreateCopy();
         if (myTree != null)
         {
             bool vChange = GUI.changed;
@@ -58,6 +59,14 @@ public class ConditionEditor : EditorWindow
                 myTree.GetComponent<ConditionCore>().ModifyingFrequencyLeafs(test1);
 
             }
+        }
+    }
+
+    public void CreateCopy()
+    {
+        if (GUILayout.Button("Create Copy"))
+        {
+            
         }
     }
 

@@ -90,21 +90,29 @@ public class ConditionMapEditor : EditorWindow
         {
             case BUTTON_TEMP:
                 myConditions.heatMap = EditorGUILayout.ObjectField(new GUIContent("Heat Map:", "The temperature map."), myConditions.heatMap, typeof(Texture2D), true) as Texture2D;
+                if (myConditions.heatMap != null)
+                    myConditions.heatMap = MonochromeTextures(myConditions.heatMap);
                 myConditions.heatMapMax = EditorGUILayout.FloatField(new GUIContent("Max temperature (C°):", "The max temperature of the Map"), myConditions.heatMapMax);
                 myConditions.heatMapMin = EditorGUILayout.FloatField(new GUIContent("Min temperature (C°):", "The min temperature of the Map"), myConditions.heatMapMin);
                 break;
             case BUTTON_WATER:
                 myConditions.waterMap = EditorGUILayout.ObjectField(new GUIContent("Humidity/Rain Map:", "The Humidity/Rain map."), myConditions.waterMap, typeof(Texture2D), true) as Texture2D;
+                if (myConditions.waterMap != null)
+                    myConditions.waterMap = MonochromeTextures(myConditions.waterMap);
                 myConditions.waterMapMax = EditorGUILayout.FloatField(new GUIContent("Max Humidity/Rain (mm/m²):", "The max Humidity/Rain of the Map"), myConditions.waterMapMax);
                 myConditions.waterMapMin = EditorGUILayout.FloatField(new GUIContent("Min Humidity/Rain (mm/m²):", "The min Humidity/Rain of the Map"), myConditions.waterMapMin);
                 break;
             case BUTTON_WIND:
                 myConditions.windMap = EditorGUILayout.ObjectField(new GUIContent("Wind Map:", "The Wind map."), myConditions.windMap, typeof(Texture2D), true) as Texture2D;
+                if (myConditions.windMap != null)
+                    myConditions.windMap = MonochromeTextures(myConditions.windMap);
                 myConditions.windMapMax = EditorGUILayout.FloatField(new GUIContent("Max Wind (m/s):", "The max Wind of the Map"), myConditions.windMapMax);
                 myConditions.windMapMin = EditorGUILayout.FloatField(new GUIContent("Min Wind (m/s):", "The min Wind of the Map"), myConditions.windMapMin);
                 break;
             case BUTTON_SOIL:
                 myConditions.soilMap = EditorGUILayout.ObjectField(new GUIContent("Soil Map:", "The Soil map."), myConditions.soilMap, typeof(Texture2D), true) as Texture2D;
+                if (myConditions.soilMap != null)
+                    myConditions.soilMap = MonochromeTextures(myConditions.soilMap);
                 myConditions.soilMapMax = EditorGUILayout.FloatField(new GUIContent("Max Soil quality:", "The max Soil quality of the Map"), myConditions.soilMapMax);
                 myConditions.soilMapMin = EditorGUILayout.FloatField(new GUIContent("Min Soil quality:", "The min Soil quality of the Map"), myConditions.soilMapMin);
                 break;
@@ -112,6 +120,29 @@ public class ConditionMapEditor : EditorWindow
 
 
     }
+
+    private Texture2D MonochromeTextures(Texture2D text)
+    {
+        Color32[] pixels = text.GetPixels32();
+        for (int x = 0; x < text.width; x++)
+        {
+            for (int y = 0; y < text.height; y++)
+            {
+                Color32 pixel = pixels[x + y * text.width];
+                int p = ((256 * 256 + pixel.r) * 256 + pixel.b) * 256 + pixel.g;
+                int b = p % 256;
+                p = Mathf.FloorToInt(p / 256);
+                int g = p % 256;
+                p = Mathf.FloorToInt(p / 256);
+                int r = p % 256;
+                float l = (0.2126f * r / 255f) + 0.7152f * (g / 255f) + 0.0722f * (b / 255f);
+                Color c = new Color(l, l, l, 1);
+                text.SetPixel(x, y, c);
+            }
+        }
+        return text;
+    }
+
 }
 
 

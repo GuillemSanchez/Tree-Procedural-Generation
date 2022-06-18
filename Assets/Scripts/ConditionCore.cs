@@ -4,6 +4,7 @@ using UnityEngine;
 using TreeEditor;
 using UnityEditor;
 
+[ExecuteInEditMode]
 public class ConditionCore : MonoBehaviour
 {
     public TreeConditions myConditions;
@@ -11,6 +12,8 @@ public class ConditionCore : MonoBehaviour
     private TreeData myData;
 
     public TreeData initalData;
+
+    public GameObject myPlane;
 
     private float RadiusValue;
     private float HeightValue;
@@ -32,7 +35,41 @@ public class ConditionCore : MonoBehaviour
     private float lastWC = 0;
 
 
+    private Transform lastTransform;
 
+    private void Update()
+    {
+        if (lastTransform == null)
+            lastTransform = Transform.Instantiate(this.gameObject.transform);
+
+
+
+        if (lastTransform.position != this.gameObject.transform.position)
+            GetPlaneUnderUs();
+
+
+
+        lastTransform = Transform.Instantiate(this.gameObject.transform);
+    }
+
+    private void GetPlaneUnderUs()
+    {
+        RaycastHit hit;
+        Debug.Log("aaaa");
+        if (Physics.Raycast(this.gameObject.transform.position, Vector3.down, out hit, 100f))
+        {
+            if (hit.collider.gameObject.GetComponent<MapCore>() != null)
+            {
+                myPlane = hit.collider.gameObject;
+                Vector2 ColisionPoint = hit.textureCoord;
+            }
+        }
+    }
+
+    private void GetPixelInformation()
+    {
+
+    }
 
     public void ModifyingHeight(float final)
     {
