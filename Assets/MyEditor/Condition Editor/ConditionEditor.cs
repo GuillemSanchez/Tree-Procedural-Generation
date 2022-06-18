@@ -81,13 +81,14 @@ public class ConditionEditor : EditorWindow
         if (vChange != GUI.changed)
         {
 
-
+            bool needOriginal = false;
             if (myTree.GetComponent<ConditionCore>())
             {
                 if (myTree.GetComponent<ConditionCore>().myConditions == null)
                 {
                     myTree.GetComponent<ConditionCore>().myConditions = new TreeConditions();
                     AssetDatabase.CreateAsset(myTree.GetComponent<ConditionCore>().myConditions, "Assets/" + myTree.name + "conditions.asset");
+                    needOriginal = true;
                 }
             }
             else
@@ -95,6 +96,7 @@ public class ConditionEditor : EditorWindow
                 myTree.AddComponent<ConditionCore>();
                 myTree.GetComponent<ConditionCore>().myConditions = new TreeConditions();
                 AssetDatabase.CreateAsset(myTree.GetComponent<ConditionCore>().myConditions, "Assets/" + myTree.name + "conditions.asset");
+                needOriginal = true;
 
             }
 
@@ -120,6 +122,11 @@ public class ConditionEditor : EditorWindow
 
 
             myTree.GetComponent<ConditionCore>().GetInfo();
+
+            if (needOriginal)
+            {
+                myTree.GetComponent<ConditionCore>().GetOriginalData();
+            }
         }
 
     }

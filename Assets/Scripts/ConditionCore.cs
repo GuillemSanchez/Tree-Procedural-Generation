@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TreeEditor;
+using UnityEditor;
 
 public class ConditionCore : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class ConditionCore : MonoBehaviour
     private Tree myTree;
     private TreeData myData;
 
-    private TreeData initalData;
+    public TreeData initalData;
 
     private float RadiusValue;
     private float HeightValue;
@@ -247,7 +248,12 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
+    }
+
+    public void GetOriginalData()
+    {
         initalData = TreeData.Instantiate(myData);
+        AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
     }
 
     private List<TreeGroupBranch> GetMainTrunks()

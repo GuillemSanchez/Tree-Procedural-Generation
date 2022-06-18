@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TreeEditor;
 
 
 [CreateAssetMenu(fileName = "New Conditions", menuName = "Procedural Tree")]
 public class TreeConditions : ScriptableObject
 {
-    public string treeClass;
-    public Tree tree;
+    public TreeData myOriginalData;
 
     public float optimHeight;
     public float unOptimHeight;
