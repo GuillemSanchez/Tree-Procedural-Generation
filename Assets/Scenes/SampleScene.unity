@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myConditions: {fileID: 11400000, guid: 099bc577a31f17245bdf4032e65a52a7, type: 2}
   initalData: {fileID: 11400000, guid: bb892c9824eaefe4f88b32c89dc878de, type: 2}
+  myPlane: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5f7a40c5b2eef874db1b7f9a27fdc724, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -478,8 +479,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418291084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -403.9114, y: 185.9626, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -403.91, y: 185.9626, z: 1}
+  m_LocalScale: {x: 16.894638, y: 16.894638, z: 16.894638}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3

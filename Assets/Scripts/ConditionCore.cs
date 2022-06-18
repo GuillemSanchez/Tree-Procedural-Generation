@@ -35,40 +35,46 @@ public class ConditionCore : MonoBehaviour
     private float lastWC = 0;
 
 
-    private Transform lastTransform;
+    private Vector3 lastTransform;
 
     private void Update()
     {
         if (lastTransform == null)
-            lastTransform = Transform.Instantiate(this.gameObject.transform);
+            lastTransform = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
 
 
 
-        if (lastTransform.position != this.gameObject.transform.position)
+        if (lastTransform != this.gameObject.transform.position)
             GetPlaneUnderUs();
 
 
 
-        lastTransform = Transform.Instantiate(this.gameObject.transform);
+        lastTransform = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
     }
 
     private void GetPlaneUnderUs()
     {
         RaycastHit hit;
-        Debug.Log("aaaa");
+
         if (Physics.Raycast(this.gameObject.transform.position, Vector3.down, out hit, 100f))
         {
             if (hit.collider.gameObject.GetComponent<MapCore>() != null)
             {
                 myPlane = hit.collider.gameObject;
                 Vector2 ColisionPoint = hit.textureCoord;
+                GetPixelInformation(ColisionPoint);
+            }
+            else
+            {
+                myPlane = null;
             }
         }
+
     }
 
-    private void GetPixelInformation()
+    private void GetPixelInformation(Vector2 textcoord)
     {
-
+        Texture2D test = myPlane.GetComponent<MeshRenderer>().material.mainTexture as Texture2D;
     }
 
     public void ModifyingHeight(float final)
