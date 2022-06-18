@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\MyEditor\Condition Map\ConditionMapEditor.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\WindTool.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\WaterTool.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicMainTrunk.cs" />
@@ -43,14 +44,13 @@
      <Compile Include="Assets\MyEditor\Generate Editor\BasicLeafs.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\TreeConditions.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\SoilTool.cs" />
+     <Compile Include="Assets\Scripts\MapCore.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicTreeGenerator.cs" />
+     <Compile Include="Assets\MyEditor\Condition Map\MapConditions.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\ConditionTool.cs" />
      <Compile Include="Assets\Scripts\ConditionCore.cs" />
      <Compile Include="Assets\MyEditor\Generate Editor\BasicBranches.cs" />
      <Compile Include="Assets\MyEditor\Condition Editor\ConditionEditor.cs" />
-     <Compile Include="Assets\MyEditor\Condition Map\ConditionMapEditor.cs" />
-     <Compile Include="Assets\MyEditor\Condition Map\MapConditions.cs" />
-     <Compile Include="Assets\Scripts\MapCore.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

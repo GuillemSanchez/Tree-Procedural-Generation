@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Hierarchy
   m_RootView: {fileID: 4}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 93
+  controlID: 111
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 98
+  controlID: 37
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 99
+  controlID: 38
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.105325565, y: 0.14837122, z: -0.015306979, w: -0.9814588}
     speed: 2
-    m_Value: {x: -0.10550491, y: 0.14862385, z: -0.015333043, w: -0.98313}
+    m_Value: {x: -0.10532556, y: 0.1483712, z: -0.0153069785, w: -0.9814587}
   m_Size:
     m_Target: 30.264067
     speed: 2
@@ -499,7 +499,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 60fbffff
+      m_ExpandedIDs: bef8ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -658,8 +658,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -514
     m_HBaseRangeMax: 514
-    m_VBaseRangeMin: -238.5
-    m_VBaseRangeMax: 238.5
+    m_VBaseRangeMin: -249
+    m_VBaseRangeMax: 249
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -676,11 +676,11 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 21
+      y: 0
       width: 1028
-      height: 477
+      height: 498
     m_Scale: {x: 1.193946, y: 1.193946}
-    m_Translation: {x: 458.25476, y: 192.2439}
+    m_Translation: {x: 458.25476, y: 202.7439}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -688,9 +688,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -383.8153
-      y: -161.01556
+      y: -169.80994
       width: 861.01044
-      height: 399.51556
+      height: 417.10428
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1028, y: 498}
@@ -737,21 +737,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Trees
+    - Assets
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Trees
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\root\Documents\GitHub\Tree-Procedural-Generation
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 14}
-    m_SelectedIDs: 54370000
-    m_LastClickedID: 14164
-    m_ExpandedIDs: 000000003e37000000ca9a3b
+    m_SelectedIDs: e2370000
+    m_LastClickedID: 14306
+    m_ExpandedIDs: 00000000e237000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -779,7 +779,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003e370000
+    m_ExpandedIDs: 00000000e2370000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
