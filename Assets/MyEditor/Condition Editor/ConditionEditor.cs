@@ -189,7 +189,7 @@ public class ConditionEditor : EditorWindow
             myTree.GetComponent<ConditionCore>().FUpdate();
 
         //TODO mover de sitio en el update de condition core
-        myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
+        //myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
         GUILayout.Space(10);
         planeToSpawn = EditorGUILayout.ObjectField(new GUIContent("Plane:", "Plane where the trees will spawn."), planeToSpawn, typeof(GameObject), true) as GameObject;
         numberOfTrees = EditorGUILayout.IntField(new GUIContent("Number of trees:", "Number of trees to spawn in the plane"), numberOfTrees);

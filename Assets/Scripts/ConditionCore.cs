@@ -52,7 +52,7 @@ public class ConditionCore : MonoBehaviour
         if (lastTransform != this.gameObject.transform.position)
         {
             GetPlaneUnderUs();
-            GettingReadyToUpdate();
+            this.gameObject.GetComponent<ConditionCore>().GettingReadyToUpdate();
         }
 
 
@@ -340,6 +340,7 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
+        getOriginalLeafs();
     }
 
     public void GetOriginalData()
@@ -553,8 +554,7 @@ public class ConditionCore : MonoBehaviour
             if (valHeight != 0)
                 toHeight /= valHeight;
 
-            Debug.Log("Height: to " + toHeight);
-
+            //Debug.Log("Height: to " + toHeight);
         }
 
 
