@@ -11,6 +11,11 @@ public class ConditionCore : MonoBehaviour
     private Tree myTree;
     public TreeData myData;
 
+    private float temp;
+    private float water;
+    private float wind;
+    private float soil;
+
     public TreeData initalData;
 
     public GameObject myPlane;
@@ -45,7 +50,11 @@ public class ConditionCore : MonoBehaviour
 
 
         if (lastTransform != this.gameObject.transform.position)
+        {
             GetPlaneUnderUs();
+            GettingReadyToUpdate();
+        }
+
 
 
 
@@ -86,24 +95,24 @@ public class ConditionCore : MonoBehaviour
         if (con.heatMap != null)
         {
             finalTemp = con.heatMap.GetPixel((int)(con.heatMap.width * textcoord.x), (int)(con.heatMap.height * textcoord.y)).grayscale;
-            myConditions.temp = FastChange(con.heatMapMin, con.heatMapMax, finalTemp);
+            temp = FastChange(con.heatMapMin, con.heatMapMax, finalTemp);
         }
 
         if (con.soilMap != null)
         {
             finalSoil = con.soilMap.GetPixel((int)(con.soilMap.width * textcoord.x), (int)(con.soilMap.height * textcoord.y)).grayscale;
-            myConditions.soil = FastChange(con.soilMapMin, con.soilMapMax, finalSoil);
+            soil = FastChange(con.soilMapMin, con.soilMapMax, finalSoil);
         }
 
         if (con.waterMap != null)
         {
             finalWater = con.waterMap.GetPixel((int)(con.waterMap.width * textcoord.x), (int)(con.waterMap.height * textcoord.y)).grayscale;
-            myConditions.water = FastChange(con.waterMapMin, con.waterMapMax, finalWater);
+            water = FastChange(con.waterMapMin, con.waterMapMax, finalWater);
         }
         if (con.windMap != null)
         {
             finalWind = con.windMap.GetPixel((int)(con.windMap.width * textcoord.x), (int)(con.windMap.height * textcoord.y)).grayscale;
-            myConditions.wind = FastChange(con.windMapMin, con.windMapMax, finalWind);
+            wind = FastChange(con.windMapMin, con.windMapMax, finalWind);
         }
 
 
@@ -423,7 +432,7 @@ public class ConditionCore : MonoBehaviour
         {
             if (myConditions.myTemp.adaptabilityRange != 0)
             {
-                float val = myConditions.myTemp.GetCurveValue(myConditions.temp);
+                float val = myConditions.myTemp.GetCurveValue(temp);
                 heightArr.Add(val);
                 heightArr.Add(myConditions.myTemp.heightModifier);
 
@@ -448,7 +457,7 @@ public class ConditionCore : MonoBehaviour
         {
             if (myConditions.myWater.adaptabilityRange != 0)
             {
-                float val = myConditions.myWater.GetCurveValue(myConditions.water);
+                float val = myConditions.myWater.GetCurveValue(water);
 
                 heightArr.Add(val);
                 heightArr.Add(myConditions.myWater.heightModifier);
@@ -474,7 +483,7 @@ public class ConditionCore : MonoBehaviour
         {
             if (myConditions.mySoil.adaptabilityRange != 0)
             {
-                float val = myConditions.mySoil.GetCurveValue(myConditions.soil);
+                float val = myConditions.mySoil.GetCurveValue(soil);
 
                 heightArr.Add(val);
                 heightArr.Add(myConditions.mySoil.heightModifier);
@@ -500,7 +509,7 @@ public class ConditionCore : MonoBehaviour
         {
             if (myConditions.myWind.adaptabilityRange != 0)
             {
-                float val = myConditions.myWind.GetCurveValue(myConditions.wind);
+                float val = myConditions.myWind.GetCurveValue(wind);
 
                 heightArr.Add(val);
                 heightArr.Add(myConditions.myWind.heightModifier);

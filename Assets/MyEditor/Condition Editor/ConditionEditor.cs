@@ -212,19 +212,30 @@ public class ConditionEditor : EditorWindow
 
     private void SpawnTree()
     {
-        GameObject holder = Instantiate(myTree, Vector3.one, Quaternion.identity);
+        // We instanciate a new tree from a prefrab (my tree).
+        GameObject newTree = Instantiate(myTree, Vector3.one, Quaternion.identity);
 
+
+        // Then we need to create a new tree data to be able to modify the tree without changing the original.
         TreeData reference = Instantiate(myTree.GetComponent<Tree>().data as TreeData);
 
+        // Also we need to create a new mesh for the same reason as the last step.
         Mesh referenceMesh = Instantiate(myTree.GetComponent<MeshFilter>().sharedMesh);
+        newTree.GetComponent<MeshFilter>().sharedMesh = referenceMesh;
+        reference.mesh = newTree.GetComponent<MeshFilter>().sharedMesh;
 
-        holder.GetComponent<MeshFilter>().sharedMesh = referenceMesh;
+        // We also need to do the same with the materials.
+        /*for (int i = 0; i < myTree.GetComponent<MeshRenderer>().materials.Length; i++)
+        {
+            Material referenceMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().materials[i]);
 
-        holder.GetComponent<Tree>().data = reference;
 
-        reference.mesh = holder.GetComponent<MeshFilter>().sharedMesh;
+        }*/
 
-        holder.GetComponent<ConditionCore>().GetInfo();
+
+        // At last we need to use the new Tree data for everything.
+        newTree.GetComponent<Tree>().data = reference;
+        newTree.GetComponent<ConditionCore>().GetInfo();
 
     }
     public void Corrections()
