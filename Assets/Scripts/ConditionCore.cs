@@ -74,7 +74,32 @@ public class ConditionCore : MonoBehaviour
 
     private void GetPixelInformation(Vector2 textcoord)
     {
-        Texture2D test = myPlane.GetComponent<MeshRenderer>().material.mainTexture as Texture2D;
+        // This is the texture that is coliding with with the vector2 in pixels.
+        float finalTemp = 0;
+        float finalSoil = 0;
+        float finalWater = 0;
+        float finalWind = 0;
+
+        MapConditions con = myPlane.GetComponent<MapCore>().mapConditions;
+
+        finalTemp = con.heatMap.GetPixel((int)(con.heatMap.width * textcoord.x), (int)(con.heatMap.height * textcoord.y)).grayscale;
+        finalSoil = con.soilMap.GetPixel((int)(con.soilMap.width * textcoord.x), (int)(con.soilMap.height * textcoord.y)).grayscale;
+        finalWater = con.waterMap.GetPixel((int)(con.waterMap.width * textcoord.x), (int)(con.waterMap.height * textcoord.y)).grayscale;
+        finalWind = con.windMap.GetPixel((int)(con.windMap.width * textcoord.x), (int)(con.windMap.height * textcoord.y)).grayscale;
+
+        myConditions.temp = FastChange(con.heatMapMin, con.heatMapMax, finalTemp);
+        myConditions.soil = FastChange(con.soilMapMin, con.soilMapMax, finalSoil);
+        myConditions.water = FastChange(con.waterMapMin, con.waterMapMax, finalWater);
+        myConditions.wind = FastChange(con.windMapMin, con.windMapMax, finalWind);
+
+    }
+
+
+    private float FastChange(float ini, float fin, float val)
+    {
+        float range = fin - ini;
+        float finalval = (val * range) + ini;
+        return finalval;
     }
 
     public void ModifyingHeight(float final)

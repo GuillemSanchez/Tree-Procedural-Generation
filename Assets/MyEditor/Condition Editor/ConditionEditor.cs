@@ -218,6 +218,7 @@ public class ConditionEditor : EditorWindow
         if (GUILayout.Button("Save"))
             myTree.GetComponent<ConditionCore>().FUpdate();
 
+
         myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
 
         //Boton de safe data. Donde se guarda el resultado final del tree 
