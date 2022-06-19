@@ -6,6 +6,7 @@ using TreeEditor;
 
 
 
+
 public class ConditionEditor : EditorWindow
 {
     private GameObject myTree;
@@ -225,17 +226,32 @@ public class ConditionEditor : EditorWindow
         reference.mesh = newTree.GetComponent<MeshFilter>().sharedMesh;
 
         // We also need to do the same with the materials.
-        /*for (int i = 0; i < myTree.GetComponent<MeshRenderer>().materials.Length; i++)
+
+        for (int i = 0; i < reference.leafGroups.Length; i++)
         {
-            Material referenceMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().materials[i]);
+            reference.leafGroups[i].materialLeaf = Instantiate(reference.leafGroups[i].materialLeaf);
+        }
 
+        for (int i = 0; i < reference.branchGroups.Length; i++)
+        {
+            reference.branchGroups[i].materialBranch = Instantiate(reference.branchGroups[i].materialBranch);
+            if (reference.branchGroups[i].materialBreak != null)
+                reference.branchGroups[i].materialBreak = Instantiate(reference.branchGroups[i].materialBreak);
 
-        }*/
+            if (reference.branchGroups[i].materialFrond != null)
+                reference.branchGroups[i].materialFrond = Instantiate(reference.branchGroups[i].materialFrond);
+        }
+
+        reference.optimizedSolidMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().sharedMaterials[0]);
+        reference.optimizedCutoutMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().sharedMaterials[1]);
 
 
         // At last we need to use the new Tree data for everything.
         newTree.GetComponent<Tree>().data = reference;
         newTree.GetComponent<ConditionCore>().GetInfo();
+        Debug.Log(AssetDatabase.GetAssetPath(newTree));
+        
+        // Doble update pa que no pete eso raro.
 
     }
     public void Corrections()
