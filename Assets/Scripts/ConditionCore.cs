@@ -9,7 +9,7 @@ public class ConditionCore : MonoBehaviour
 {
     public TreeConditions myConditions;
     private Tree myTree;
-    private TreeData myData;
+    public TreeData myData;
 
     public TreeData initalData;
 
@@ -82,15 +82,30 @@ public class ConditionCore : MonoBehaviour
 
         MapConditions con = myPlane.GetComponent<MapCore>().mapConditions;
 
-        finalTemp = con.heatMap.GetPixel((int)(con.heatMap.width * textcoord.x), (int)(con.heatMap.height * textcoord.y)).grayscale;
-        finalSoil = con.soilMap.GetPixel((int)(con.soilMap.width * textcoord.x), (int)(con.soilMap.height * textcoord.y)).grayscale;
-        finalWater = con.waterMap.GetPixel((int)(con.waterMap.width * textcoord.x), (int)(con.waterMap.height * textcoord.y)).grayscale;
-        finalWind = con.windMap.GetPixel((int)(con.windMap.width * textcoord.x), (int)(con.windMap.height * textcoord.y)).grayscale;
 
-        myConditions.temp = FastChange(con.heatMapMin, con.heatMapMax, finalTemp);
-        myConditions.soil = FastChange(con.soilMapMin, con.soilMapMax, finalSoil);
-        myConditions.water = FastChange(con.waterMapMin, con.waterMapMax, finalWater);
-        myConditions.wind = FastChange(con.windMapMin, con.windMapMax, finalWind);
+        if (con.heatMap != null)
+        {
+            finalTemp = con.heatMap.GetPixel((int)(con.heatMap.width * textcoord.x), (int)(con.heatMap.height * textcoord.y)).grayscale;
+            myConditions.temp = FastChange(con.heatMapMin, con.heatMapMax, finalTemp);
+        }
+
+        if (con.soilMap != null)
+        {
+            finalSoil = con.soilMap.GetPixel((int)(con.soilMap.width * textcoord.x), (int)(con.soilMap.height * textcoord.y)).grayscale;
+            myConditions.soil = FastChange(con.soilMapMin, con.soilMapMax, finalSoil);
+        }
+
+        if (con.waterMap != null)
+        {
+            finalWater = con.waterMap.GetPixel((int)(con.waterMap.width * textcoord.x), (int)(con.waterMap.height * textcoord.y)).grayscale;
+            myConditions.water = FastChange(con.waterMapMin, con.waterMapMax, finalWater);
+        }
+        if (con.windMap != null)
+        {
+            finalWind = con.windMap.GetPixel((int)(con.windMap.width * textcoord.x), (int)(con.windMap.height * textcoord.y)).grayscale;
+            myConditions.wind = FastChange(con.windMapMin, con.windMapMax, finalWind);
+        }
+
 
     }
 

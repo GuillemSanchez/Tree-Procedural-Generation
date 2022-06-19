@@ -18,7 +18,7 @@ public class ConditionMapEditor : EditorWindow
 
 
 
-    [MenuItem("Tree Procedural Generation/Condition Map Editor")]
+    [MenuItem("Window/Tree Procedural Generation/Condition Map Editor")]
     private static void ShowWindow()
     {
         var window = GetWindow<ConditionMapEditor>();

@@ -33,7 +33,7 @@ public class BasicTreeGenerator : EditorWindow
     float LODoverall = 0.8f;
 
 
-    [MenuItem("Tree Procedural Generation/BasicTreeGenerator")]
+    [MenuItem("Window/Tree Procedural Generation/Basic Tree Generator")]
     private static void ShowWindow()
     {
         var window = GetWindow<BasicTreeGenerator>();

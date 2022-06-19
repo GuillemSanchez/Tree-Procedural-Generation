@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using TreeEditor;
 
 
 
 public class ConditionEditor : EditorWindow
 {
     private GameObject myTree;
+    private GameObject planeToSpawn;
     public TreeConditions myTreeConditions;
-
-
-    public float test1 = 0;
-    public float test2 = 0;
-    public float test3 = 0;
-    public float testcolor1 = 0;
-    public float testcolor2 = 0;
-    private bool conditionInflu = false;
     public int numberOfOriginalLeafs = 0;
+    private int numberOfTrees = 0;
 
 
     // Condition Tools ---------------------------------------
@@ -29,7 +24,7 @@ public class ConditionEditor : EditorWindow
     bool showSoil = false;
     bool showWind = false;
 
-    [MenuItem("Tree Procedural Generation/Condition Editor")]
+    [MenuItem("Window/Tree Procedural Generation/Condition Editor")]
     private static void ShowWindow()
     {
         var window = GetWindow<ConditionEditor>();
@@ -41,34 +36,15 @@ public class ConditionEditor : EditorWindow
     private void OnGUI()
     {
         GetTree();
-        CreateCopy();
         if (myTree != null)
         {
             bool vChange = GUI.changed;
             numberOfOriginalLeafs = myTree.GetComponent<ConditionCore>().getOriginalLeafs();
             EditConditionTreeVars();
             Corrections();
-            if (conditionInflu && vChange != GUI.changed)
-            {
-                /*myTree.GetComponent<ConditionCore>().ModifyingHeight(test1);
-                myTree.GetComponent<ConditionCore>().ModifyingRadius(test2);
-                myTree.GetComponent<ConditionCore>().ModifyingGrowth();
-                myTree.GetComponent<ConditionCore>().ModifyingLeafSize(test3);
-                myTree.GetComponent<ConditionCore>().ModifyingWoodColor(testcolor1);
-                myTree.GetComponent<ConditionCore>().ModifyingLeafColor(testcolor2);*/
-                myTree.GetComponent<ConditionCore>().ModifyingFrequencyLeafs(test1);
-
-            }
         }
     }
-
-    public void CreateCopy()
-    {
-        if (GUILayout.Button("Create Copy"))
-        {
-            
-        }
-    }
+    // TODO resetear el tree al original.
 
     private void GetTree()
     {
@@ -209,23 +185,48 @@ public class ConditionEditor : EditorWindow
         if (showWind)
             ShowWindConditions();
 
-
-        myTreeConditions.temp = EditorGUILayout.FloatField("temp", myTreeConditions.temp);
-        myTreeConditions.water = EditorGUILayout.FloatField("water", myTreeConditions.water);
-        myTreeConditions.soil = EditorGUILayout.FloatField("soil", myTreeConditions.soil);
-        myTreeConditions.wind = EditorGUILayout.FloatField("wind", myTreeConditions.wind);
-
         if (GUILayout.Button("Save"))
             myTree.GetComponent<ConditionCore>().FUpdate();
 
-
+        //TODO mover de sitio en el update de condition core
         myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
+        GUILayout.Space(10);
+        planeToSpawn = EditorGUILayout.ObjectField(new GUIContent("Plane:", "Plane where the trees will spawn."), planeToSpawn, typeof(GameObject), true) as GameObject;
+        numberOfTrees = EditorGUILayout.IntField(new GUIContent("Number of trees:", "Number of trees to spawn in the plane"), numberOfTrees);
 
-        //Boton de safe data. Donde se guarda el resultado final del tree 
-
-
+        if (GUILayout.Button("Spawn Trees in Plane"))
+        {
+            SpawnTrees();
+        }
+    }
+    private void SpawnTrees()
+    {
+        if (planeToSpawn != null)
+        {
+            for (int i = 0; i < numberOfTrees; i++)
+            {
+                SpawnTree();
+            }
+        }
     }
 
+    private void SpawnTree()
+    {
+        GameObject holder = Instantiate(myTree, Vector3.one, Quaternion.identity);
+
+        TreeData reference = Instantiate(myTree.GetComponent<Tree>().data as TreeData);
+
+        Mesh referenceMesh = Instantiate(myTree.GetComponent<MeshFilter>().sharedMesh);
+
+        holder.GetComponent<MeshFilter>().sharedMesh = referenceMesh;
+
+        holder.GetComponent<Tree>().data = reference;
+
+        reference.mesh = holder.GetComponent<MeshFilter>().sharedMesh;
+
+        holder.GetComponent<ConditionCore>().GetInfo();
+
+    }
     public void Corrections()
     {
         if (myTreeConditions.optimNumberLeafs < 0)
@@ -266,7 +267,6 @@ public class ConditionEditor : EditorWindow
         myTreeConditions.unOptimLeafColor = EditorGUILayout.ColorField(new GUIContent("Apalling leaf color:", "In the worst conditions which tonality is the color of the leaf?"), myTreeConditions.unOptimLeafColor);
         Color helper1 = EditorGUILayout.ColorField(new GUIContent("Final Leaf Color:", "This is the color that the leafs of tree will get if saved, you can't edit it."), myTreeConditions.finalLColor);
         GUILayout.Space(5);
-        conditionInflu = EditorGUILayout.Toggle(new GUIContent("Condition Modifying?", "Does the previus vars affects to the tree?"), conditionInflu);
     }
 
     private void ShowTemperatureConditions()
