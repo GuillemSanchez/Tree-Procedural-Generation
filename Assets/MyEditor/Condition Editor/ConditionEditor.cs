@@ -206,12 +206,12 @@ public class ConditionEditor : EditorWindow
         {
             for (int i = 0; i < numberOfTrees; i++)
             {
-                SpawnTree();
+                SpawnTree(i);
             }
         }
     }
 
-    private void SpawnTree()
+    private void SpawnTree(int a)
     {
         // We instanciate a new tree from a prefrab (my tree).
         GameObject newTree = Instantiate(myTree, Vector3.one, Quaternion.identity);
@@ -249,7 +249,8 @@ public class ConditionEditor : EditorWindow
         // At last we need to use the new Tree data for everything.
         newTree.GetComponent<Tree>().data = reference;
         newTree.GetComponent<ConditionCore>().GetInfo();
-        Debug.Log(AssetDatabase.GetAssetPath(newTree));
+
+        AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + a + ".asset");
         
         // Doble update pa que no pete eso raro.
 
