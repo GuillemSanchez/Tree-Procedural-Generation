@@ -11,6 +11,7 @@ public class ConditionCore : MonoBehaviour
     private Tree myTree;
     public TreeData myData;
 
+    public bool firstUpdate = false;
     private float temp;
     private float water;
     private float wind;
@@ -55,6 +56,12 @@ public class ConditionCore : MonoBehaviour
             this.gameObject.GetComponent<ConditionCore>().GettingReadyToUpdate();
         }
 
+        if (firstUpdate)
+        {
+            GettingReadyToUpdate();
+            FUpdate();
+            firstUpdate = false;
+        }
 
 
 
