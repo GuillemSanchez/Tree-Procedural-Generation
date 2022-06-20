@@ -211,10 +211,13 @@ public class ConditionEditor : EditorWindow
         }
     }
 
+    // This function is really important, you can change it if you want but the base should be like this.
     private void SpawnTree(int a)
     {
+        Vector3 spawnPoint = WhereToSpawn();
+
         // We instanciate a new tree from a prefrab (my tree).
-        GameObject newTree = Instantiate(myTree, Vector3.one, Quaternion.identity);
+        GameObject newTree = Instantiate(myTree, spawnPoint, Quaternion.identity);
 
 
         // Then we need to create a new tree data to be able to modify the tree without changing the original.
@@ -250,15 +253,42 @@ public class ConditionEditor : EditorWindow
         newTree.GetComponent<Tree>().data = reference;
         newTree.GetComponent<ConditionCore>().GetInfo();
 
+        // This is important if we want to be able to change the colors of every individual tree.
         AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + a + ".asset");
-        
-        // Doble update pa que no pete eso raro.
-
     }
+
+    // This Function is only for the spawn of trees in a Plane, its really rudimentary and this will be futher improve in the future.
+    private Vector3 WhereToSpawn()
+    {
+        Vector3 planeScale = planeToSpawn.transform.lossyScale;
+        Vector3 planePosition = planeToSpawn.transform.position;
+        Debug.Log(planeScale.x);
+
+
+        Bounds aaa = planeToSpawn.GetComponent<MeshFilter>().sharedMesh.bounds;
+
+
+        float planeLength = (aaa.extents.z * planeScale.z);
+        float planeWidth = (aaa.extents.x * planeScale.x);
+        planeLength = Random.Range(-planeLength, planeLength);
+        planeWidth = Random.Range(-planeWidth, planeWidth);
+
+        planeLength += planePosition.z;
+        planeWidth += planePosition.x;
+
+        Vector3 randomPosition = new Vector3(planeWidth, planeToSpawn.transform.position.y, planeLength);
+
+        Vector3 definitive = planeToSpawn.transform.rotation * randomPosition;
+
+        return definitive;
+    }
+
     public void Corrections()
     {
+        // We can't have negative numbers on the leafs
         if (myTreeConditions.optimNumberLeafs < 0)
             myTreeConditions.optimNumberLeafs = 0;
+
 
         if (myTreeConditions.unOptimNumberLeafs < 0)
             myTreeConditions.unOptimNumberLeafs = 0;
