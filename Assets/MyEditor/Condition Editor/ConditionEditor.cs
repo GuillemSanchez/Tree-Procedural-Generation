@@ -186,8 +186,18 @@ public class ConditionEditor : EditorWindow
         if (showWind)
             ShowWindConditions();
 
-        if (GUILayout.Button("Save"))
-            myTree.GetComponent<ConditionCore>().FUpdate();
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Show Optim Tree"))
+            ShowOptimTree();
+
+        if (GUILayout.Button("Show Original Tree"))
+            ShowOriginalTree();
+
+        if (GUILayout.Button("Show Unoptim Tree"))
+            ShowUnOptimTree();
+
+        GUILayout.EndHorizontal();
 
         //TODO mover de sitio en el update de condition core
         //myTree.GetComponent<ConditionCore>().GettingReadyToUpdate();
@@ -199,6 +209,21 @@ public class ConditionEditor : EditorWindow
         {
             SpawnTrees();
         }
+    }
+
+    private void ShowOptimTree()
+    {
+        myTree.GetComponent<ConditionCore>().ShowOptim();
+    }
+
+    private void ShowUnOptimTree()
+    {
+        myTree.GetComponent<ConditionCore>().ShowUnOptim();
+    }
+
+    private void ShowOriginalTree()
+    {
+        myTree.GetComponent<ConditionCore>().ShowOriginal();
     }
     private void SpawnTrees()
     {

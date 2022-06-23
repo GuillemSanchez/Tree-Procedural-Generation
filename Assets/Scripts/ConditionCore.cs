@@ -353,7 +353,7 @@ public class ConditionCore : MonoBehaviour
     public void GetOriginalData()
     {
         initalData = TreeData.Instantiate(myData);
-        AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
+       // AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
     }
 
     private List<TreeGroupBranch> GetMainTrunks()
@@ -650,5 +650,50 @@ public class ConditionCore : MonoBehaviour
         lastWC = toWcolor;
     }
 
+    public void ShowOptim()
+    {
+
+        ModifyingHeight(1);
+
+        ModifyingRadius(1);
+
+        ModifyingGrowth();
+
+        ModifyingLeafSize(1);
+
+        ModifyingFrequencyLeafs(1);
+
+        ModifyingLeafColor(1);
+
+        ModifyingWoodColor(1);
+
+        FUpdate();
+    }
+
+    public void ShowOriginal()
+    {
+        myData = TreeData.Instantiate(initalData);
+        FUpdate();
+    }
+
+    public void ShowUnOptim()
+    {
+
+        ModifyingHeight(-1);
+
+        ModifyingRadius(-1);
+
+        ModifyingGrowth();
+
+        ModifyingLeafSize(-1);
+
+        ModifyingFrequencyLeafs(-1);
+
+        ModifyingLeafColor(-1);
+
+        ModifyingWoodColor(-1);
+
+        FUpdate();
+    }
 
 }
