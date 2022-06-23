@@ -347,13 +347,14 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
-        getOriginalLeafs();
+
     }
 
     public void GetOriginalData()
     {
         initalData = TreeData.Instantiate(myData);
         AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
+        getOriginalLeafs();
     }
 
     private List<TreeGroupBranch> GetMainTrunks()

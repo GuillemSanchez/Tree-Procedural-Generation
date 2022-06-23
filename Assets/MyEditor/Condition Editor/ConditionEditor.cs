@@ -106,13 +106,14 @@ public class ConditionEditor : EditorWindow
             }
 
 
-
             myTree.GetComponent<ConditionCore>().GetInfo();
+
 
             if (needOriginal)
             {
                 myTree.GetComponent<ConditionCore>().GetOriginalData();
             }
+
         }
 
     }
@@ -227,8 +228,8 @@ public class ConditionEditor : EditorWindow
     }
     private void CreateCopy()
     {
-         // We instanciate a new tree from a prefrab (my tree).
-        GameObject newTree = Instantiate(myTree, (myTree.transform.position + Vector3.one*3), Quaternion.identity);
+        // We instanciate a new tree from a prefrab (my tree).
+        GameObject newTree = Instantiate(myTree, (myTree.transform.position + Vector3.one * 3), Quaternion.identity);
 
 
         // Then we need to create a new tree data to be able to modify the tree without changing the original.
@@ -267,7 +268,7 @@ public class ConditionEditor : EditorWindow
 
 
         // This is important if we want to be able to change the colors of every individual tree.
-        AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + myTree.name + "fastcopy"+ ".asset");
+        AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + myTree.name + "fastcopy" + ".asset");
 
 
         newTree.GetComponent<ConditionCore>().firstUpdate = true;
