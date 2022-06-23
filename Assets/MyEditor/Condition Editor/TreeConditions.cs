@@ -38,11 +38,4 @@ public class TreeConditions : ScriptableObject
     public WindTool myWind;
     public SoilTool mySoil;
 
-
-    public float temp;
-    public float water;
-    public float wind;
-    public float soil;
-
-
 }
