@@ -353,7 +353,7 @@ public class ConditionCore : MonoBehaviour
     public void GetOriginalData()
     {
         initalData = TreeData.Instantiate(myData);
-       // AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
+        AssetDatabase.CreateAsset(initalData, "Assets/" + myTree.name + "OrginalData.asset");
     }
 
     private List<TreeGroupBranch> GetMainTrunks()
