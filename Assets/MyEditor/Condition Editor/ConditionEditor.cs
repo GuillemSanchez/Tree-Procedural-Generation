@@ -271,6 +271,8 @@ public class ConditionEditor : EditorWindow
 
 
         newTree.GetComponent<ConditionCore>().firstUpdate = true;
+
+        myTree = newTree;
     }
     private void SpawnTrees()
     {
