@@ -670,11 +670,6 @@ public class ConditionCore : MonoBehaviour
         FUpdate();
     }
 
-    public void ShowOriginal()
-    {
-        myData = TreeData.Instantiate(initalData);
-        FUpdate();
-    }
 
     public void ShowUnOptim()
     {

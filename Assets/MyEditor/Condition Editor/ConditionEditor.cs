@@ -119,6 +119,13 @@ public class ConditionEditor : EditorWindow
 
     public void EditConditionTreeVars()
     {
+        if (GUILayout.Button("Create copy to work on"))
+            CreateCopy();
+        GUILayout.Label("We recomend to work on a copy of the tree!", EditorStyles.boldLabel);
+
+
+
+
         GUILayout.Space(20);
         GUILayout.Label("TREE CONDITIONS:", EditorStyles.boldLabel);
         GUILayout.Space(10);
@@ -186,13 +193,11 @@ public class ConditionEditor : EditorWindow
         if (showWind)
             ShowWindConditions();
 
+
         GUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Show Optim Tree"))
             ShowOptimTree();
-
-        if (GUILayout.Button("Show Original Tree"))
-            ShowOriginalTree();
 
         if (GUILayout.Button("Show Unoptim Tree"))
             ShowUnOptimTree();
@@ -220,10 +225,52 @@ public class ConditionEditor : EditorWindow
     {
         myTree.GetComponent<ConditionCore>().ShowUnOptim();
     }
-
-    private void ShowOriginalTree()
+    private void CreateCopy()
     {
-        myTree.GetComponent<ConditionCore>().ShowOriginal();
+         // We instanciate a new tree from a prefrab (my tree).
+        GameObject newTree = Instantiate(myTree, (myTree.transform.position + Vector3.one*3), Quaternion.identity);
+
+
+        // Then we need to create a new tree data to be able to modify the tree without changing the original.
+        TreeData reference = Instantiate(myTree.GetComponent<Tree>().data as TreeData);
+
+        // Also we need to create a new mesh for the same reason as the last step.
+        Mesh referenceMesh = Instantiate(myTree.GetComponent<MeshFilter>().sharedMesh);
+        newTree.GetComponent<MeshFilter>().sharedMesh = referenceMesh;
+        reference.mesh = newTree.GetComponent<MeshFilter>().sharedMesh;
+
+        // We also need to do the same with the materials.
+
+        for (int i = 0; i < reference.leafGroups.Length; i++)
+        {
+            reference.leafGroups[i].materialLeaf = Instantiate(reference.leafGroups[i].materialLeaf);
+        }
+
+        for (int i = 0; i < reference.branchGroups.Length; i++)
+        {
+            reference.branchGroups[i].materialBranch = Instantiate(reference.branchGroups[i].materialBranch);
+            if (reference.branchGroups[i].materialBreak != null)
+                reference.branchGroups[i].materialBreak = Instantiate(reference.branchGroups[i].materialBreak);
+
+            if (reference.branchGroups[i].materialFrond != null)
+                reference.branchGroups[i].materialFrond = Instantiate(reference.branchGroups[i].materialFrond);
+        }
+
+        reference.optimizedSolidMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().sharedMaterials[0]);
+        reference.optimizedCutoutMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().sharedMaterials[1]);
+
+        // At last we need to use the new Tree data for everything.
+        newTree.GetComponent<Tree>().data = reference;
+        newTree.GetComponent<ConditionCore>().GetInfo();
+
+
+
+
+        // This is important if we want to be able to change the colors of every individual tree.
+        AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + myTree.name + "fastcopy"+ ".asset");
+
+
+        newTree.GetComponent<ConditionCore>().firstUpdate = true;
     }
     private void SpawnTrees()
     {
