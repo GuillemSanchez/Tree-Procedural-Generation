@@ -76,7 +76,7 @@ public class WaterTool : ConditionTool
             heightModifier = 0.5f;
             radiusModifier = 0.5f;
             leafSizeModifier = 0.8f;
-            numberOfLeafsModifier = 0.8f;
+            numberOfLeafsModifier = 0.5f;
             leafColorModifier = 0.8f;
             woodColorModifier = 0.5f;
             // Designer Choices -----------------------------

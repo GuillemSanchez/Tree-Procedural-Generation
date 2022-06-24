@@ -58,6 +58,8 @@ public class ConditionCore : MonoBehaviour
 
         if (firstUpdate)
         {
+
+            getOriginalLeafs();
             GettingReadyToUpdate();
             FUpdate();
             firstUpdate = false;
@@ -347,7 +349,8 @@ public class ConditionCore : MonoBehaviour
     {
         myTree = this.GetComponentInParent<Tree>();
         myData = myTree.data as TreeData;
-
+        if (firstUpdate)
+            getOriginalLeafs();
     }
 
     public void GetOriginalData()

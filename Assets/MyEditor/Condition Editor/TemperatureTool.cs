@@ -77,7 +77,7 @@ public class TemperatureTool : ConditionTool
             radiusModifier = 0.2f;
             leafSizeModifier = 0.8f;
             numberOfLeafsModifier = 0.8f;
-            leafColorModifier = 0.8f;
+            leafColorModifier = 0.5f;
             woodColorModifier = 0.1f;
             // Designer Choices -----------------------------
         }

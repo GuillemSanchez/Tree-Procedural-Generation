@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a35945e21fb9146b56f05b272f3ab9, type: 3}
+  m_Name: Pinusconditions
+  m_EditorClassIdentifier: 
+  myOriginalData: {fileID: 0}
+  optimHeight: 0
+  unOptimHeight: 0
+  standartHeight: 0
+  optimRadius: 0
+  unOptimRadius: 0
+  standartRadius: 0
+  optimLeafSize: 0
+  unOptimLeafSize: 0
+  standartLeafSize: 0
+  optimWoodColor: {r: 0, g: 0, b: 0, a: 0}
+  unOptimWoodColor: {r: 0, g: 0, b: 0, a: 0}
+  finalWColor: {r: 0, g: 0, b: 0, a: 0}
+  optimLeafColor: {r: 0, g: 0, b: 0, a: 0}
+  unOptimLeafColor: {r: 0, g: 0, b: 0, a: 0}
+  finalLColor: {r: 0, g: 0, b: 0, a: 0}
+  optimNumberLeafs: 0
+  unOptimNumberLeafs: 0
+  myTemp: {fileID: 0}
+  myWater: {fileID: 0}
+  myWind: {fileID: 0}
+  mySoil: {fileID: 0}

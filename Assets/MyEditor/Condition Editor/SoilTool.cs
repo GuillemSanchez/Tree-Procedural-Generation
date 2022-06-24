@@ -73,12 +73,12 @@ public class SoilTool : ConditionTool
             curveBeggining = 0;
             curveEnd = 80;
 
-            heightModifier = 0.2f;
-            radiusModifier = 0.2f;
-            leafSizeModifier = 0.8f;
-            numberOfLeafsModifier = 0.8f;
-            leafColorModifier = 0.8f;
-            woodColorModifier = 0.1f;
+            heightModifier = 0.8f;
+            radiusModifier = 0.8f;
+            leafSizeModifier = 0.4f;
+            numberOfLeafsModifier = 0.4f;
+            leafColorModifier = 0.4f;
+            woodColorModifier = 0.8f;
             // Designer Choices -----------------------------
         }
     }

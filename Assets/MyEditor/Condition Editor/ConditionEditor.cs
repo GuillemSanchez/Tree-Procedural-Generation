@@ -324,18 +324,19 @@ public class ConditionEditor : EditorWindow
         reference.optimizedCutoutMaterial = Instantiate(myTree.GetComponent<MeshRenderer>().sharedMaterials[1]);
         reference.root.seed = Random.Range(1, 9999999);
 
+        newTree.GetComponent<ConditionCore>().firstUpdate = true;
         // At last we need to use the new Tree data for everything.
         newTree.GetComponent<Tree>().data = reference;
         newTree.GetComponent<ConditionCore>().GetInfo();
 
 
 
-
+        Debug.Log("asfaefaef");
         // This is important if we want to be able to change the colors of every individual tree.
         AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + a + ".asset");
 
 
-        newTree.GetComponent<ConditionCore>().firstUpdate = true;
+
     }
 
     // This Function is only for the spawn of trees in a Plane, its really rudimentary and this will be futher improve in the future.
