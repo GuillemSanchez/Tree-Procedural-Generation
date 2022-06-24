@@ -8,10 +8,12 @@ public class WindTool : ConditionTool
     bool advancedBool = false;
     float optimValue_;
     float adaptabilityRange_;
-    public void ShowTool()
+    public void ShowTool(float currentVal)
     {
         NotNull();
         GUILayout.Label("Wind:", EditorStyles.boldLabel);
+        GUILayout.Space(5);
+        GUILayout.Label("Current Wind: " + currentVal);
         GUILayout.Space(5);
         optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Wind (m/s)", "The optimum wind for the tree to grow at the best."), optimValue);
         adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Wind (m/s)", "How adaptable is the range of the tree to the environment winds."), adaptabilityRange);
@@ -70,8 +72,8 @@ public class WindTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = 0;
-            curveEnd = 30;
+            curveBeggining = -30;
+            curveEnd = 60;
 
             heightModifier = 0.9f;
             radiusModifier = 0.5f;

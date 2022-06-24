@@ -12,10 +12,10 @@ public class ConditionCore : MonoBehaviour
     public TreeData myData;
 
     public bool firstUpdate = false;
-    private float temp;
-    private float water;
-    private float wind;
-    private float soil;
+    public float temp;
+    public float water;
+    public float wind;
+    public float soil;
 
     public TreeData initalData;
 

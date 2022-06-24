@@ -8,10 +8,12 @@ public class WaterTool : ConditionTool
     bool advancedBool = false;
     float optimValue_;
     float adaptabilityRange_;
-    public void ShowTool()
+    public void ShowTool(float currentVal)
     {
         NotNull();
         GUILayout.Label("Humidity/Rain:", EditorStyles.boldLabel);
+        GUILayout.Label("Current Humidity: " + currentVal);
+        GUILayout.Space(5);
         GUILayout.Space(5);
         optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Humidity/Rain (mm/m²)", "The optimum Humidity/Rain of the tree where it grows the best."), optimValue);
         adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability (mm/m²)", "How adaptable is the range of the tree to the environment Humidity/Rain."), adaptabilityRange);
@@ -70,8 +72,8 @@ public class WaterTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = 0;
-            curveEnd = 800;
+            curveBeggining = -200;
+            curveEnd = 1000;
 
             heightModifier = 0.5f;
             radiusModifier = 0.5f;

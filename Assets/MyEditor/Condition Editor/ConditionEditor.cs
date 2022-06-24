@@ -411,22 +411,22 @@ public class ConditionEditor : EditorWindow
 
     private void ShowTemperatureConditions()
     {
-        myTreeConditions.myTemp.ShowTool();
+        myTreeConditions.myTemp.ShowTool(myTree.GetComponent<ConditionCore>().temp);
     }
 
     private void ShowWaterConditions()
     {
-        myTreeConditions.myWater.ShowTool();
+        myTreeConditions.myWater.ShowTool(myTree.GetComponent<ConditionCore>().water);
     }
 
     private void ShowSoilConditions()
     {
-        myTreeConditions.mySoil.ShowTool();
+        myTreeConditions.mySoil.ShowTool(myTree.GetComponent<ConditionCore>().soil);
     }
 
     private void ShowWindConditions()
     {
-        myTreeConditions.myWind.ShowTool();
+        myTreeConditions.myWind.ShowTool(myTree.GetComponent<ConditionCore>().wind);
     }
 
 

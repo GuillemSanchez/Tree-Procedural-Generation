@@ -8,10 +8,12 @@ public class TemperatureTool : ConditionTool
     bool advancedBool = false;
     float optimValue_;
     float adaptabilityRange_;
-    public void ShowTool()
+    public void ShowTool(float currentVal)
     {
         NotNull();
         GUILayout.Label("Temperature:", EditorStyles.boldLabel);
+        GUILayout.Space(5);
+        GUILayout.Label("Current Temp: " + currentVal);
         GUILayout.Space(5);
         optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Temperature (C°)", "The optimum temperature of the tree where it grows the best, it works for any type of grades"), optimValue);
         adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Temp (C°)", "How adaptable is the range of the tree to the environment temperature, it works for any type of grades."), adaptabilityRange);
@@ -70,8 +72,8 @@ public class TemperatureTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = -30;
-            curveEnd = 80;
+            curveBeggining = -100;
+            curveEnd = 200;
 
             heightModifier = 0.2f;
             radiusModifier = 0.2f;

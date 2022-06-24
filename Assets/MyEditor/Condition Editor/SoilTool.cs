@@ -8,10 +8,12 @@ public class SoilTool : ConditionTool
     bool advancedBool = false;
     float optimValue_;
     float adaptabilityRange_;
-    public void ShowTool()
+    public void ShowTool(float currentVal)
     {
         NotNull();
         GUILayout.Label("Soil Richness:", EditorStyles.boldLabel);
+        GUILayout.Space(5);
+        GUILayout.Label("Current Richness: " + currentVal);
         GUILayout.Space(5);
         optimValue = EditorGUILayout.FloatField(new GUIContent("Optimum Soil quality:", "The optimum soil richness of the tree where it grows the best."), optimValue);
         adaptabilityRange = EditorGUILayout.FloatField(new GUIContent("Adaptability Soil quality:", "How adaptable is the range of the tree to the soil where it is growing."), adaptabilityRange);
@@ -70,8 +72,8 @@ public class SoilTool : ConditionTool
         if (heightModifier == -1)
         {
             // Designer Choices -----------------------------
-            curveBeggining = 0;
-            curveEnd = 80;
+            curveBeggining = -20;
+            curveEnd = 120;
 
             heightModifier = 0.8f;
             radiusModifier = 0.8f;
