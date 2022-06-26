@@ -603,7 +603,6 @@ public class ConditionCore : MonoBehaviour
             }
             if (valFleaf != 0)
                 toFleaf /= valFleaf;
-
         }
 
 

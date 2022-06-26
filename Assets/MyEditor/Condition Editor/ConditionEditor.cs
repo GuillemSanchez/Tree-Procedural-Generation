@@ -330,8 +330,6 @@ public class ConditionEditor : EditorWindow
         newTree.GetComponent<ConditionCore>().GetInfo();
 
 
-
-        Debug.Log("asfaefaef");
         // This is important if we want to be able to change the colors of every individual tree.
         AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + a + ".asset");
 
