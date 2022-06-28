@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using TreeEditor;
+using System.IO;
 
 
 
@@ -277,17 +278,20 @@ public class ConditionEditor : EditorWindow
     }
     private void SpawnTrees()
     {
+
+        string folder = AssetDatabase.CreateFolder(Path.GetDirectoryName(AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData)), Path.GetFileNameWithoutExtension(myTree.name) + "_Copies");
+        Debug.Log(AssetDatabase.GUIDToAssetPath(folder));
         if (planeToSpawn != null)
         {
             for (int i = 0; i < numberOfTrees; i++)
             {
-                SpawnTree(i);
+                SpawnTree(i, AssetDatabase.GUIDToAssetPath(folder));
             }
         }
     }
 
     // This function is really important, you can change it if you want but the base should be like this.
-    private void SpawnTree(int a)
+    private void SpawnTree(int a, string folder)
     {
         Vector3 spawnPoint = WhereToSpawn();
 
@@ -329,9 +333,9 @@ public class ConditionEditor : EditorWindow
         newTree.GetComponent<Tree>().data = reference;
         newTree.GetComponent<ConditionCore>().GetInfo();
 
-
+        Debug.Log(folder);
         // This is important if we want to be able to change the colors of every individual tree.
-        AssetDatabase.CreateAsset(reference, AssetDatabase.GetAssetPath(myTree.GetComponent<Tree>().data as TreeData) + "copyasset" + a + ".asset");
+        AssetDatabase.CreateAsset(reference, folder + "/" + a + ".asset");
 
 
 
