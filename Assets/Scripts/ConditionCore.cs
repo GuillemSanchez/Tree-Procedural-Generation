@@ -73,8 +73,9 @@ public class ConditionCore : MonoBehaviour
     private void GetPlaneUnderUs()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(this.gameObject.transform.position, Vector3.down, out hit, 100f))
+        Vector3 ori = this.gameObject.transform.position;
+        ori.y += 0.3f;
+        if (Physics.Raycast(ori, Vector3.down, out hit, 100f))
         {
             if (hit.collider.gameObject.GetComponent<MapCore>() != null)
             {

@@ -340,25 +340,50 @@ public class ConditionEditor : EditorWindow
     // This Function is only for the spawn of trees in a Plane, its really rudimentary and this will be futher improve in the future.
     private Vector3 WhereToSpawn()
     {
-        Vector3 planeScale = planeToSpawn.transform.lossyScale;
-        Vector3 planePosition = planeToSpawn.transform.position;
-        Debug.Log(planeScale.x);
+        Vector3 definitive = Vector3.one;
+
+        if (planeToSpawn.GetComponent<Terrain>() == null)
+        {
+            Vector3 planeScale = planeToSpawn.transform.lossyScale;
+            Vector3 planePosition = planeToSpawn.transform.position;
+            Debug.Log(planeScale.x);
 
 
-        Bounds aaa = planeToSpawn.GetComponent<MeshFilter>().sharedMesh.bounds;
+            Bounds aaa = planeToSpawn.GetComponent<MeshFilter>().sharedMesh.bounds;
 
 
-        float planeLength = (aaa.extents.z * planeScale.z);
-        float planeWidth = (aaa.extents.x * planeScale.x);
-        planeLength = Random.Range(-planeLength, planeLength);
-        planeWidth = Random.Range(-planeWidth, planeWidth);
+            float planeLength = (aaa.extents.z * planeScale.z);
+            float planeWidth = (aaa.extents.x * planeScale.x);
+            planeLength = Random.Range(-planeLength, planeLength);
+            planeWidth = Random.Range(-planeWidth, planeWidth);
 
-        planeLength += planePosition.z;
-        planeWidth += planePosition.x;
+            planeLength += planePosition.z;
+            planeWidth += planePosition.x;
 
-        Vector3 randomPosition = new Vector3(planeWidth, planeToSpawn.transform.position.y + 3, planeLength);
+            Vector3 randomPosition = new Vector3(planeWidth, planeToSpawn.transform.position.y + 0.3f, planeLength);
 
-        Vector3 definitive = planeToSpawn.transform.rotation * randomPosition;
+            definitive = planeToSpawn.transform.rotation * randomPosition;
+        }
+        else
+        {
+            TerrainData myTerrain = planeToSpawn.GetComponent<Terrain>().terrainData;
+            Vector3 planePosition = myTerrain.bounds.center;
+            float planeLength = myTerrain.bounds.extents.z;
+            float planeWidth = myTerrain.bounds.extents.x;
+            planeLength = Random.Range(-planeLength, planeLength);
+            planeWidth = Random.Range(-planeWidth, planeWidth);
+
+            planeLength += planePosition.z;
+            planeWidth += planePosition.x;
+
+            Vector3 randomPosition = new Vector3(planeWidth, planeToSpawn.transform.position.y + 3, planeLength);
+
+            definitive = planeToSpawn.transform.rotation * randomPosition;
+
+            float planeY = planeToSpawn.GetComponent<Terrain>().SampleHeight(definitive);
+
+            definitive.y = planeY + 0.3f;
+        }
 
         return definitive;
     }
