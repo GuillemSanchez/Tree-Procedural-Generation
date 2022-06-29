@@ -16,6 +16,8 @@ public class ConditionEditor : EditorWindow
     public int numberOfOriginalLeafs = 0;
     private int numberOfTrees = 0;
 
+    Vector2 scrollPos;
+
 
     // Condition Tools ---------------------------------------
 
@@ -179,6 +181,8 @@ public class ConditionEditor : EditorWindow
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
+        int size_before = 150;
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(this.position.height - size_before));
 
         if (showTree)
             ShowTreeConditions();
@@ -216,6 +220,7 @@ public class ConditionEditor : EditorWindow
         {
             SpawnTrees();
         }
+        EditorGUILayout.EndScrollView();
     }
 
     private void ShowOptimTree()
