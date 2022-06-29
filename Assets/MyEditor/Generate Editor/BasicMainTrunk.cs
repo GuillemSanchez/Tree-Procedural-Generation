@@ -117,7 +117,7 @@ public class BasicMainTrunk : EditorWindow
 
     private void OnGUI()
     {
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(this.position.height - 40));
         bool can = GUI.changed;
 
         GUILayout.Label("CORE MAIN TRUNK:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo

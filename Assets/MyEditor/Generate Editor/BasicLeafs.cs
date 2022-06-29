@@ -100,7 +100,7 @@ public class BasicLeafs : EditorWindow
 
     private void OnGUI()
     {
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(this.position.height - 40));
         bool can = GUI.changed;
 
         GUILayout.Label("Core Leaf Vars:", EditorStyles.boldLabel); // Cambiar para mas relevancia todo
