@@ -325,8 +325,63 @@ public class ConditionCore : MonoBehaviour
         }
     }
 
+    //Returns the original Height of the tree
+    private float calculateHeight()
+    {
+        float height_t = 0;
+        List<TreeGroupBranch> mains = GetMainTrunks();
+        float times = 0;
+        for (int i = 0; i < mains.Count; i++)
+        {
+            float value = (mains[i].height.x + mains[i].height.y) / 2;
+            height_t += value;
+            times++;
+        }
+        height_t /= times;
 
+        return height_t;
+    }
 
+    //Returns the original Radius of the tree.
+    private float calculateRadius()
+    {
+        float radius_t = 0;
+        List<TreeGroupBranch> mains = GetMainTrunks();
+        float times = 0;
+        for (int i = 0; i < mains.Count; i++)
+        {
+            float value = mains[i].radius;
+            radius_t += value;
+            times++;
+        }
+
+        radius_t /= times;
+        return radius_t;
+    }
+
+    // This function is used to get the standart values for a tree when the values are emptie.
+    public void getStandartValues()
+    {
+        if (myConditions.optimHeight == 0.001f || myConditions.optimHeight == -1f)
+        {
+            float radi = calculateRadius();
+            float heigh = calculateHeight();
+
+            myConditions.optimHeight = heigh * 1.2f;
+            myConditions.standartHeight = heigh;
+            myConditions.unOptimHeight = heigh * 0.8f;
+
+            myConditions.optimRadius = radi * 1.2f;
+            myConditions.standartRadius = radi;
+            myConditions.unOptimRadius = radi * 0.8f;
+
+            myConditions.optimLeafSize = 1.0f;
+            myConditions.unOptimLeafSize = 0.9f;
+
+            myConditions.optimNumberLeafs = (int)(TotalLeafs * 1.2f);
+            myConditions.unOptimNumberLeafs = (int)(TotalLeafs * 0.7f);
+        }
+    }
     public int getOriginalLeafs()
     {
         int totalLeafs = 0;

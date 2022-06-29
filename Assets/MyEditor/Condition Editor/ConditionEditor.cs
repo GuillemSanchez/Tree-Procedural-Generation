@@ -117,6 +117,8 @@ public class ConditionEditor : EditorWindow
                 myTree.GetComponent<ConditionCore>().GetOriginalData();
             }
 
+             myTree.GetComponent<ConditionCore>().getStandartValues();
+
         }
 
     }

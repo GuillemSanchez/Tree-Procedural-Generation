@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pinusconditions
   m_EditorClassIdentifier: 
   myOriginalData: {fileID: 0}
-  optimHeight: 0
+  optimHeight: -1
   unOptimHeight: 0
   standartHeight: 0
   optimRadius: 0
